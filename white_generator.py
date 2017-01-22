@@ -3,6 +3,8 @@
 import uuid
 import argparse
 import sqlite3
+import logging
+import os
 
 from PIL import Image
 from PIL import ImageDraw
@@ -43,6 +45,12 @@ def parse_options():
         '--input-file',
         required=True,
         help='the path to the file with notes',
+    )
+    parser.add_argument(
+        '-o',
+        '--output-path',
+        required=True,
+        help='the path for generated images',
     )
     parser.add_argument(
         '-W',
@@ -207,10 +215,49 @@ def generate_image(
 
     return image
 
-options = parse_options()
-for note in read_notes(options.input_file):
-    print('=' * 80)
-    print('Note {:s}'.format(generate_note_id(note)))
-    print('')
-    print(note)
-print('=' * 80)
+if __name__ == '__main__':
+    logging.basicConfig(
+        format='%(asctime)s\t[%(levelname)s]\t%(message)s',
+        level=logging.INFO
+    )
+
+    try:
+        options = parse_options()
+        if not os.path.exists(options.output_path):
+            os.makedirs(options.output_path)
+
+        db_connection = connect_to_db(options.database_file)
+        for note in read_notes(options.input_file):
+            note_id = generate_note_id(note)
+            logging.info("it's generating an image for the note %s", note_id)
+
+            if not exists_in_db(db_connection, note):
+                insert_in_db(db_connection, note)
+            else:
+                logging.warning("the note %s is duplicated", note_id)
+                continue
+
+            image = generate_image(
+                note,
+                ImageParameters(
+                    options.image_width,
+                    options.image_height,
+                    options.image_background_color,
+                ),
+                FontParameters(
+                    options.font_file,
+                    options.font_size,
+                    options.font_color,
+                ),
+                WatermarkParameters(
+                    options.watermark_text,
+                    options.watermark_size,
+                    options.watermark_color,
+                )
+            )
+            image.save(
+                os.path.join(options.output_path, note_id + '.png'),
+                'PNG'
+            )
+    except Exception as exception:
+        logging.critical(exception)
