@@ -18,6 +18,12 @@ class FontParameters:
         self.size = size
         self.color = color
 
+class WatermarkParameters:
+    def __init__(self, text, size, color):
+        self.text = text
+        self.size = size
+        self.color = color
+
 def parse_options():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -67,6 +73,25 @@ def parse_options():
         default='#000000',
         help='the font color',
     )
+    parser.add_argument(
+        '-w',
+        '--watermark-text',
+        default='',
+        help='the watermark text (empty for disable)',
+    )
+    parser.add_argument(
+        '-S',
+        '--watermark-size',
+        type=int,
+        default=12,
+        help='the watermark font size',
+    )
+    parser.add_argument(
+        '-C',
+        '--watermark-color',
+        default='#808080',
+        help='the watermark font color',
+    )
 
     return parser.parse_args()
 
@@ -76,7 +101,18 @@ def get_text_position(draw, text, image_parameters, font):
     text_top = (image_parameters.height - text_height) / 2
     return (text_left, text_top)
 
-def generate_image(text, image_parameters, font_parameters):
+def get_watermark_position(draw, text, image_parameters, font):
+    (text_width, text_height) = draw.textsize(text, font=font)
+    text_left = image_parameters.width - text_width
+    text_top = image_parameters.height - text_height
+    return (text_left, text_top)
+
+def generate_image(
+    text,
+    image_parameters,
+    font_parameters,
+    watermark_parameters,
+):
     image = Image.new(
         'RGB',
         (image_parameters.width, image_parameters.height),
@@ -91,6 +127,23 @@ def generate_image(text, image_parameters, font_parameters):
         font=text_font,
         fill=font_parameters.color,
     )
+
+    if len(watermark_parameters.text) != 0:
+        watermark_font = ImageFont.truetype(
+            font_parameters.file,
+            watermark_parameters.size,
+        )
+        draw.text(
+            get_watermark_position(
+                draw,
+                watermark_parameters.text,
+                image_parameters,
+                watermark_font,
+            ),
+            watermark_parameters.text,
+            font=watermark_font,
+            fill=watermark_parameters.color,
+        )
 
     return image
 
@@ -107,5 +160,10 @@ image = generate_image(
         options.font_size,
         options.font_color,
     ),
+    WatermarkParameters(
+        options.watermark_text,
+        options.watermark_size,
+        options.watermark_color,
+    )
 )
 image.show()
