@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import sqlite3
 
 from PIL import Image
 from PIL import ImageDraw
@@ -92,8 +93,42 @@ def parse_options():
         default='#808080',
         help='the watermark font color',
     )
+    parser.add_argument(
+        '-d',
+        '--database-file',
+        default='notes.db',
+        help='the path to the database file',
+    )
 
     return parser.parse_args()
+
+def connect_to_db(db_file):
+    db_connection = sqlite3.connect(db_file)
+    db_connection \
+        .cursor() \
+        .execute(
+            '''
+                CREATE TABLE IF NOT EXISTS notes (
+                    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                    timestamp TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    text TEXT NOT NULL UNIQUE
+                )
+            '''
+        )
+    db_connection.commit()
+
+    return db_connection
+
+def insert_in_db(db_connection, text):
+    db_connection.cursor().execute('INSERT INTO notes(text) VALUES(?)', (text,))
+    db_connection.commit()
+
+def exists_in_db(db_connection, text):
+    (counter,) = db_connection \
+        .cursor() \
+        .execute('SELECT count(*) FROM notes WHERE text = ?', (text,)) \
+        .fetchone()
+    return bool(counter)
 
 def get_text_position(draw, text, image_parameters, font):
     (text_width, text_height) = draw.multiline_textsize(text, font=font)
@@ -148,22 +183,15 @@ def generate_image(
     return image
 
 options = parse_options()
-image = generate_image(
-    'test\nololo',
-    ImageParameters(
-        options.image_width,
-        options.image_height,
-        options.image_background_color,
-    ),
-    FontParameters(
-        options.font_file,
-        options.font_size,
-        options.font_color,
-    ),
-    WatermarkParameters(
-        options.watermark_text,
-        options.watermark_size,
-        options.watermark_color,
-    )
-)
-image.show()
+db_connection = connect_to_db(options.database_file)
+if not exists_in_db(db_connection, 'test'):
+    insert_in_db(db_connection, 'test')
+    print('inserts the "test" text')
+else:
+    print('the "test" text already exists')
+if not exists_in_db(db_connection, 'ololo'):
+    insert_in_db(db_connection, 'ololo')
+    print('inserts the "ololo" text')
+else:
+    print('the "ololo" text already exists')
+db_connection.close()
