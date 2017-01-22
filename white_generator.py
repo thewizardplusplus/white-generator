@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import uuid
 import argparse
 import sqlite3
 
@@ -25,6 +26,8 @@ class WatermarkParameters:
         self.size = size
         self.color = color
 
+_UUID_NAMESPACE = uuid.uuid1()
+
 def parse_options():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
@@ -34,6 +37,12 @@ def parse_options():
         '--version',
         action='version',
         version='White Generator, v1.0 (Copyright (C) 2017 thewizardplusplus)',
+    )
+    parser.add_argument(
+        '-i',
+        '--input-file',
+        required=True,
+        help='the path to the file with notes',
     )
     parser.add_argument(
         '-W',
@@ -101,6 +110,22 @@ def parse_options():
     )
 
     return parser.parse_args()
+
+def read_notes(notes_filename):
+    with open(notes_filename, 'r') as notes_file:
+        note = ''
+        for line in notes_file:
+            if len(line.rstrip()) != 0:
+                note += line.rstrip() + '\n'
+            elif len(note.rstrip()) != 0:
+                yield note.rstrip()
+                note = ''
+
+        if len(note.rstrip()) != 0:
+            yield note.rstrip()
+
+def generate_note_id(note):
+    return str(uuid.uuid5(_UUID_NAMESPACE, note))
 
 def connect_to_db(db_file):
     db_connection = sqlite3.connect(db_file)
@@ -183,15 +208,9 @@ def generate_image(
     return image
 
 options = parse_options()
-db_connection = connect_to_db(options.database_file)
-if not exists_in_db(db_connection, 'test'):
-    insert_in_db(db_connection, 'test')
-    print('inserts the "test" text')
-else:
-    print('the "test" text already exists')
-if not exists_in_db(db_connection, 'ololo'):
-    insert_in_db(db_connection, 'ololo')
-    print('inserts the "ololo" text')
-else:
-    print('the "ololo" text already exists')
-db_connection.close()
+for note in read_notes(options.input_file):
+    print('=' * 80)
+    print('Note {:s}'.format(generate_note_id(note)))
+    print('')
+    print(note)
+print('=' * 80)
