@@ -226,6 +226,35 @@ def exists_in_db(db_connection, text):
         .fetchone()
     return bool(counter)
 
+def crop(value, minimum, maximum):
+    return max(minimum, min(value, maximum))
+
+def get_text_rectangle(image_parameters, text_parameters):
+    rectangle = Rectangle(
+        crop(text_parameters.rectangle.left, 0, image_parameters.width),
+        crop(text_parameters.rectangle.top, 0, image_parameters.height),
+        0,
+        0,
+    )
+    if text_parameters.rectangle.right != -1:
+        rectangle.right = crop(
+            text_parameters.rectangle.right,
+            rectangle.left,
+            image_parameters.width,
+        )
+    else:
+        rectangle.right = image_parameters.width
+    if text_parameters.rectangle.bottom != -1:
+        rectangle.bottom = crop(
+            text_parameters.rectangle.bottom,
+            rectangle.top,
+            image_parameters.height,
+        )
+    else:
+        rectangle.bottom = image_parameters.height
+
+    return rectangle
+
 def get_watermark_position(draw, text, image_parameters, font):
     (text_width, text_height) = draw.textsize(text, font=font)
     text_left = image_parameters.width - text_width
@@ -247,6 +276,10 @@ def generate_image(
     else:
         image = Image.open(image_parameters.background_image)
         (image_parameters.width, image_parameters.height) = image.size
+    text_parameters.rectangle = get_text_rectangle(
+        image_parameters,
+        text_parameters,
+    )
 
     draw = ImageDraw.Draw(image)
     text_font = ImageFont.truetype(
