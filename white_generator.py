@@ -23,10 +23,12 @@ class FontParameters:
         self.color = color
 
 class TextParameters:
-    def __init__(self, font, left, top):
+    def __init__(self, font, left, top, horizontal_align, vertical_align):
         self.font = font
         self.left = left
         self.top = top
+        self.horizontal_align = horizontal_align
+        self.vertical_align = vertical_align
 
 class WatermarkParameters:
     def __init__(self, text, size, color):
@@ -71,6 +73,20 @@ def parse_options():
         type=int,
         default=0,
         help='the top text position',
+    )
+    parser.add_argument(
+        '-a',
+        '--text-horizontal-align',
+        choices=['left', 'center', 'right'],
+        default='center',
+        help='the text horizontal align',
+    )
+    parser.add_argument(
+        '-A',
+        '--text-vertical-align',
+        choices=['top', 'center', 'bottom'],
+        default='center',
+        help='the text vertical align',
     )
     parser.add_argument(
         '-W',
@@ -208,7 +224,7 @@ def generate_image(
     draw.multiline_text(
         (text_parameters.left, text_parameters.top),
         text,
-        align='center',
+        align=text_parameters.horizontal_align,
         font=text_font,
         fill=text_parameters.font.color,
     )
@@ -269,6 +285,8 @@ if __name__ == '__main__':
                     ),
                     options.text_left,
                     options.text_top,
+                    options.text_horizontal_align,
+                    options.text_vertical_align,
                 ),
                 WatermarkParameters(
                     options.watermark_text,
