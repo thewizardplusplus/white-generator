@@ -22,6 +22,12 @@ class FontParameters:
         self.size = size
         self.color = color
 
+class TextParameters:
+    def __init__(self, font, left, top):
+        self.font = font
+        self.left = left
+        self.top = top
+
 class WatermarkParameters:
     def __init__(self, text, size, color):
         self.text = text
@@ -38,7 +44,7 @@ def parse_options():
         '-v',
         '--version',
         action='version',
-        version='White Generator, v1.0 (Copyright (C) 2017 thewizardplusplus)',
+        version='White Generator, v1.1 (Copyright (C) 2017 thewizardplusplus)',
     )
     parser.add_argument(
         '-i',
@@ -51,6 +57,20 @@ def parse_options():
         '--output-path',
         required=True,
         help='the path for generated images',
+    )
+    parser.add_argument(
+        '-l',
+        '--text-left',
+        type=int,
+        default=0,
+        help='the left text position',
+    )
+    parser.add_argument(
+        '-t',
+        '--text-top',
+        type=int,
+        default=0,
+        help='the top text position',
     )
     parser.add_argument(
         '-W',
@@ -163,12 +183,6 @@ def exists_in_db(db_connection, text):
         .fetchone()
     return bool(counter)
 
-def get_text_position(draw, text, image_parameters, font):
-    (text_width, text_height) = draw.multiline_textsize(text, font=font)
-    text_left = (image_parameters.width - text_width) / 2
-    text_top = (image_parameters.height - text_height) / 2
-    return (text_left, text_top)
-
 def get_watermark_position(draw, text, image_parameters, font):
     (text_width, text_height) = draw.textsize(text, font=font)
     text_left = image_parameters.width - text_width
@@ -178,7 +192,7 @@ def get_watermark_position(draw, text, image_parameters, font):
 def generate_image(
     text,
     image_parameters,
-    font_parameters,
+    text_parameters,
     watermark_parameters,
 ):
     image = Image.new(
@@ -187,18 +201,21 @@ def generate_image(
         image_parameters.background_color,
     )
     draw = ImageDraw.Draw(image)
-    text_font = ImageFont.truetype(font_parameters.file, font_parameters.size)
+    text_font = ImageFont.truetype(
+        text_parameters.font.file,
+        text_parameters.font.size,
+    )
     draw.multiline_text(
-        get_text_position(draw, text, image_parameters, text_font),
+        (text_parameters.left, text_parameters.top),
         text,
         align='center',
         font=text_font,
-        fill=font_parameters.color,
+        fill=text_parameters.font.color,
     )
 
     if len(watermark_parameters.text) != 0:
         watermark_font = ImageFont.truetype(
-            font_parameters.file,
+            text_parameters.font.file,
             watermark_parameters.size,
         )
         draw.text(
@@ -244,10 +261,14 @@ if __name__ == '__main__':
                     options.image_height,
                     options.image_background_color,
                 ),
-                FontParameters(
-                    options.font_file,
-                    options.font_size,
-                    options.font_color,
+                TextParameters(
+                    FontParameters(
+                        options.font_file,
+                        options.font_size,
+                        options.font_color,
+                    ),
+                    options.text_left,
+                    options.text_top,
                 ),
                 WatermarkParameters(
                     options.watermark_text,
