@@ -268,6 +268,22 @@ def get_text_position_on_axis(axis_start, axis_end, text_size, align):
 
     return position + axis_start
 
+def get_text_position(draw, text, text_parameters, font):
+    (text_width, text_height) = draw.multiline_textsize(text, font=font)
+    text_left = get_text_position_on_axis(
+        text_parameters.rectangle.left,
+        text_parameters.rectangle.right,
+        text_width,
+        text_parameters.horizontal_align,
+    )
+    text_top = get_text_position_on_axis(
+        text_parameters.rectangle.top,
+        text_parameters.rectangle.bottom,
+        text_height,
+        text_parameters.vertical_align,
+    )
+    return (text_left, text_top)
+
 def get_watermark_position(draw, text, image_parameters, font):
     (text_width, text_height) = draw.textsize(text, font=font)
     text_left = image_parameters.width - text_width
@@ -300,7 +316,7 @@ def generate_image(
         text_parameters.font.size,
     )
     draw.multiline_text(
-        (text_parameters.rectangle.left, text_parameters.rectangle.top),
+        get_text_position(draw, text, text_parameters, text_font),
         text,
         align=text_parameters.horizontal_align,
         font=text_font,
