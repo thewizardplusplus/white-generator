@@ -24,10 +24,21 @@ class FontParameters:
         self.color = color
 
 class TextParameters:
-    def __init__(self, font, left, top, horizontal_align, vertical_align):
+    def __init__(
+        self,
+        font,
+        left,
+        top,
+        right,
+        bottom,
+        horizontal_align,
+        vertical_align,
+    ):
         self.font = font
         self.left = left
         self.top = top
+        self.right = right
+        self.bottom = bottom
         self.horizontal_align = horizontal_align
         self.vertical_align = vertical_align
 
@@ -74,6 +85,20 @@ def parse_options():
         type=int,
         default=0,
         help='the top text position',
+    )
+    parser.add_argument(
+        '-R',
+        '--text-right',
+        type=int,
+        default=-1,
+        help='the horizontal text limit (-1 for a background width use)',
+    )
+    parser.add_argument(
+        '-B',
+        '--text-bottom',
+        type=int,
+        default=-1,
+        help='the vertical text limit (-1 for a background height use)',
     )
     parser.add_argument(
         '-a',
@@ -298,6 +323,8 @@ if __name__ == '__main__':
                     ),
                     options.text_left,
                     options.text_top,
+                    options.text_right,
+                    options.text_bottom,
                     options.text_horizontal_align,
                     options.text_vertical_align,
                 ),
