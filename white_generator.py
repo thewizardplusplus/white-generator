@@ -11,10 +11,11 @@ from PIL import ImageDraw
 from PIL import ImageFont
 
 class ImageParameters:
-    def __init__(self, width, height, background_color):
+    def __init__(self, width, height, background_color, background_image):
         self.width = width
         self.height = height
         self.background_color = background_color
+        self.background_image = background_image
 
 class FontParameters:
     def __init__(self, file_, size, color):
@@ -107,6 +108,12 @@ def parse_options():
         '--image-background-color',
         default='#ffffff',
         help='the image background color',
+    )
+    parser.add_argument(
+        '-I',
+        '--image-background-image',
+        default='',
+        help='the path to the background image',
     )
     parser.add_argument(
         '-f',
@@ -211,11 +218,16 @@ def generate_image(
     text_parameters,
     watermark_parameters,
 ):
-    image = Image.new(
-        'RGB',
-        (image_parameters.width, image_parameters.height),
-        image_parameters.background_color,
-    )
+    if len(image_parameters.background_image) == 0:
+        image = Image.new(
+            'RGB',
+            (image_parameters.width, image_parameters.height),
+            image_parameters.background_color,
+        )
+    else:
+        image = Image.open(image_parameters.background_image)
+        (image_parameters.width, image_parameters.height) = image.size
+
     draw = ImageDraw.Draw(image)
     text_font = ImageFont.truetype(
         text_parameters.font.file,
@@ -276,6 +288,7 @@ if __name__ == '__main__':
                     options.image_width,
                     options.image_height,
                     options.image_background_color,
+                    options.image_background_image,
                 ),
                 TextParameters(
                     FontParameters(
