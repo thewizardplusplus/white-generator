@@ -255,6 +255,19 @@ def get_text_rectangle(image_parameters, text_parameters):
 
     return rectangle
 
+def get_text_position_on_axis(axis_start, axis_end, text_size, align):
+    axis_size = axis_end - axis_start
+    if align in ['left', 'top']:
+        position = 0
+    elif align == 'center':
+        position = (axis_size - text_size) // 2
+    elif align in ['right', 'bottom']:
+        position = axis_size - text_size
+    else:
+        raise Exception('the text align is incorrect')
+
+    return position + axis_start
+
 def get_watermark_position(draw, text, image_parameters, font):
     (text_width, text_height) = draw.textsize(text, font=font)
     text_left = image_parameters.width - text_width
