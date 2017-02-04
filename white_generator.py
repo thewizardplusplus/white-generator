@@ -23,22 +23,17 @@ class FontParameters:
         self.size = size
         self.color = color
 
-class TextParameters:
-    def __init__(
-        self,
-        font,
-        left,
-        top,
-        right,
-        bottom,
-        horizontal_align,
-        vertical_align,
-    ):
-        self.font = font
+class Rectangle:
+    def __init__(self, left, top, right, bottom):
         self.left = left
         self.top = top
         self.right = right
         self.bottom = bottom
+
+class TextParameters:
+    def __init__(self, font, rectangle, horizontal_align, vertical_align):
+        self.font = font
+        self.rectangle = rectangle
         self.horizontal_align = horizontal_align
         self.vertical_align = vertical_align
 
@@ -259,7 +254,7 @@ def generate_image(
         text_parameters.font.size,
     )
     draw.multiline_text(
-        (text_parameters.left, text_parameters.top),
+        (text_parameters.rectangle.left, text_parameters.rectangle.top),
         text,
         align=text_parameters.horizontal_align,
         font=text_font,
@@ -321,10 +316,12 @@ if __name__ == '__main__':
                         options.font_size,
                         options.font_color,
                     ),
-                    options.text_left,
-                    options.text_top,
-                    options.text_right,
-                    options.text_bottom,
+                    Rectangle(
+                        options.text_left,
+                        options.text_top,
+                        options.text_right,
+                        options.text_bottom,
+                    ),
                     options.text_horizontal_align,
                     options.text_vertical_align,
                 ),
