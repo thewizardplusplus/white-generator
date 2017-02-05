@@ -255,6 +255,31 @@ def get_text_rectangle(image_parameters, text_parameters):
 
     return rectangle
 
+def fit_text(draw, text, text_parameters, font):
+    if len(text.strip()) == 0:
+        return text
+
+    lines = text.split('\n')
+    if len(lines) > 1:
+        return '\n'.join(
+            fit_text(draw, line, text_parameters, font)
+            for line in lines,
+        )
+
+    words = [word.strip() for word in text.split(' ') if len(word.strip()) != 0]
+    text = words[0]
+    rectangle_width = text_parameters.rectangle.right \
+        - text_parameters.rectangle.left
+    for word in words[1:]:
+        extended_text = text + ' ' + word
+        (text_width, _) = draw.multiline_textsize(extended_text, font=font)
+        if text_width <= rectangle_width:
+            text = extended_text
+        else:
+            text = text + '\n' + word
+
+    return text
+
 def get_text_position_on_axis(axis_start, axis_end, text_size, align):
     axis_size = axis_end - axis_start
     if align in ['left', 'top']:
@@ -315,6 +340,7 @@ def generate_image(
         text_parameters.font.file,
         text_parameters.font.size,
     )
+    text = fit_text(draw, text, text_parameters, text_font)
     draw.multiline_text(
         get_text_position(draw, text, text_parameters, text_font),
         text,
