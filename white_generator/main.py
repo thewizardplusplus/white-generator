@@ -1,4 +1,3 @@
-import uuid
 import sqlite3
 import logging
 import os
@@ -9,6 +8,7 @@ from PIL import ImageDraw
 from PIL import ImageFont
 
 from . import cli
+from . import io
 
 class ImageParameters:
     def __init__(self, width, height, background_color, background_image):
@@ -42,24 +42,6 @@ class WatermarkParameters:
         self.text = text
         self.size = size
         self.color = color
-
-_UUID_NAMESPACE = uuid.uuid1()
-
-def read_notes(notes_filename):
-    with open(notes_filename, 'r') as notes_file:
-        note = ''
-        for line in notes_file:
-            if len(line.rstrip()) != 0:
-                note += line.rstrip() + '\n'
-            elif len(note.rstrip()) != 0:
-                yield note.rstrip()
-                note = ''
-
-        if len(note.rstrip()) != 0:
-            yield note.rstrip()
-
-def generate_note_id(note):
-    return str(uuid.uuid5(_UUID_NAMESPACE, note))
 
 def connect_to_db(db_file):
     db_connection = sqlite3.connect(db_file)
@@ -243,8 +225,8 @@ def main():
             os.makedirs(options.output_path)
 
         db_connection = connect_to_db(options.database_file)
-        for note in read_notes(options.input_file):
-            note_id = generate_note_id(note)
+        for note in io.read_notes(options.input_file):
+            note_id = io.generate_note_id(note)
             logging.info("it's generating an image for the note %s", note_id)
 
             if not exists_in_db(db_connection, note):
