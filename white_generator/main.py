@@ -10,98 +10,10 @@ from . import cli
 from . import io
 from . import db
 from . import types
-
-def crop(value, minimum, maximum):
-    return max(minimum, min(value, maximum))
-
-def get_text_rectangle(image_parameters, text_parameters):
-    rectangle = types.Rectangle(
-        crop(text_parameters.rectangle.left, 0, image_parameters.width),
-        crop(text_parameters.rectangle.top, 0, image_parameters.height),
-        0,
-        0,
-    )
-    if text_parameters.rectangle.right != -1:
-        rectangle.right = crop(
-            text_parameters.rectangle.right,
-            rectangle.left,
-            image_parameters.width,
-        )
-    else:
-        rectangle.right = image_parameters.width
-    if text_parameters.rectangle.bottom != -1:
-        rectangle.bottom = crop(
-            text_parameters.rectangle.bottom,
-            rectangle.top,
-            image_parameters.height,
-        )
-    else:
-        rectangle.bottom = image_parameters.height
-
-    return rectangle
-
-def fit_text(draw, text, text_parameters, font):
-    if len(text.strip()) == 0:
-        return text
-
-    lines = text.split('\n')
-    if len(lines) > 1:
-        return '\n'.join(
-            fit_text(draw, line, text_parameters, font)
-            for line in lines,
-        )
-
-    words = [word.strip() for word in text.split(' ') if len(word.strip()) != 0]
-    text = words[0]
-    rectangle_width = text_parameters.rectangle.right \
-        - text_parameters.rectangle.left
-    for word in words[1:]:
-        extended_text = text + ' ' + word
-        (text_width, _) = draw.multiline_textsize(extended_text, font=font)
-        if text_width <= rectangle_width:
-            text = extended_text
-        else:
-            text = text + '\n' + word
-
-    return text
-
-def get_text_position_on_axis(axis_start, axis_end, text_size, align):
-    axis_size = axis_end - axis_start
-    if align in ['left', 'top']:
-        position = 0
-    elif align == 'center':
-        position = (axis_size - text_size) // 2
-    elif align in ['right', 'bottom']:
-        position = axis_size - text_size
-    else:
-        raise Exception('the text align is incorrect')
-
-    return position + axis_start
-
-def get_text_position(draw, text, text_parameters, font):
-    (text_width, text_height) = draw.multiline_textsize(text, font=font)
-    text_left = get_text_position_on_axis(
-        text_parameters.rectangle.left,
-        text_parameters.rectangle.right,
-        text_width,
-        text_parameters.horizontal_align,
-    )
-    text_top = get_text_position_on_axis(
-        text_parameters.rectangle.top,
-        text_parameters.rectangle.bottom,
-        text_height,
-        text_parameters.vertical_align,
-    )
-    return (text_left, text_top)
-
-def get_watermark_position(draw, text, image_parameters, font):
-    (text_width, text_height) = draw.textsize(text, font=font)
-    text_left = image_parameters.width - text_width
-    text_top = image_parameters.height - text_height
-    return (text_left, text_top)
+from . import text
 
 def generate_image(
-    text,
+    note,
     image_parameters,
     text_parameters,
     watermark_parameters,
@@ -115,7 +27,7 @@ def generate_image(
     else:
         image = Image.open(image_parameters.background_image)
         (image_parameters.width, image_parameters.height) = image.size
-    text_parameters.rectangle = get_text_rectangle(
+    text_parameters.rectangle = text.get_text_rectangle(
         image_parameters,
         text_parameters,
     )
@@ -125,10 +37,10 @@ def generate_image(
         text_parameters.font.file,
         text_parameters.font.size,
     )
-    text = fit_text(draw, text, text_parameters, text_font)
+    fitted_note = text.fit_text(draw, note, text_parameters, text_font)
     draw.multiline_text(
-        get_text_position(draw, text, text_parameters, text_font),
-        text,
+        text.get_text_position(draw, fitted_note, text_parameters, text_font),
+        fitted_note,
         align=text_parameters.horizontal_align,
         font=text_font,
         fill=text_parameters.font.color,
@@ -140,7 +52,7 @@ def generate_image(
             watermark_parameters.size,
         )
         draw.text(
-            get_watermark_position(
+            text.get_watermark_position(
                 draw,
                 watermark_parameters.text,
                 image_parameters,
