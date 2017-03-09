@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import uuid
 import argparse
 import sqlite3
@@ -47,13 +45,14 @@ _UUID_NAMESPACE = uuid.uuid1()
 
 def parse_options():
     parser = argparse.ArgumentParser(
+        prog=__package__.replace('_', '-'),
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
         '-v',
         '--version',
         action='version',
-        version='White Generator, v1.1 (Copyright (C) 2017 thewizardplusplus)',
+        version='White Generator, v1.2 (Copyright (C) 2017 thewizardplusplus)',
     )
     parser.add_argument(
         '-i',
@@ -368,7 +367,7 @@ def generate_image(
 
     return image
 
-if __name__ == '__main__':
+def main():
     logging.basicConfig(
         format='%(asctime)s\t[%(levelname)s]\t%(message)s',
         level=logging.INFO
