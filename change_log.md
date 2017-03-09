@@ -1,5 +1,18 @@
 # Change Log
 
+## [v1.2](https://github.com/thewizardplusplus/white-generator/tree/v1.2) (2017-03-09)
+
+**Closed issues:**
+
+- Separate the code to some subpackages [\#9](https://github.com/thewizardplusplus/white-generator/issues/9)
+- Add an installation via pip tool [\#7](https://github.com/thewizardplusplus/white-generator/issues/7)
+
+**Fixed bugs:**
+
+- Include a logging initialization into a try-except block [\#11](https://github.com/thewizardplusplus/white-generator/issues/11)
+- Close a database connection [\#10](https://github.com/thewizardplusplus/white-generator/issues/10)
+- Correct an exit code on an error [\#8](https://github.com/thewizardplusplus/white-generator/issues/8)
+
 ## [v1.1](https://github.com/thewizardplusplus/white-generator/tree/v1.1) (2017-02-15)
 
 **Closed issues:**
