@@ -1,4 +1,3 @@
-import sqlite3
 import logging
 import os
 import sys
@@ -9,6 +8,7 @@ from PIL import ImageFont
 
 from . import cli
 from . import io
+from . import db
 
 class ImageParameters:
     def __init__(self, width, height, background_color, background_image):
@@ -42,34 +42,6 @@ class WatermarkParameters:
         self.text = text
         self.size = size
         self.color = color
-
-def connect_to_db(db_file):
-    db_connection = sqlite3.connect(db_file)
-    db_connection \
-        .cursor() \
-        .execute(
-            '''
-                CREATE TABLE IF NOT EXISTS notes (
-                    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                    timestamp TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                    text TEXT NOT NULL UNIQUE
-                )
-            '''
-        )
-    db_connection.commit()
-
-    return db_connection
-
-def insert_in_db(db_connection, text):
-    db_connection.cursor().execute('INSERT INTO notes(text) VALUES(?)', (text,))
-    db_connection.commit()
-
-def exists_in_db(db_connection, text):
-    (counter,) = db_connection \
-        .cursor() \
-        .execute('SELECT count(*) FROM notes WHERE text = ?', (text,)) \
-        .fetchone()
-    return bool(counter)
 
 def crop(value, minimum, maximum):
     return max(minimum, min(value, maximum))
@@ -224,13 +196,13 @@ def main():
         if not os.path.exists(options.output_path):
             os.makedirs(options.output_path)
 
-        db_connection = connect_to_db(options.database_file)
+        db_connection = db.connect_to_db(options.database_file)
         for note in io.read_notes(options.input_file):
             note_id = io.generate_note_id(note)
             logging.info("it's generating an image for the note %s", note_id)
 
-            if not exists_in_db(db_connection, note):
-                insert_in_db(db_connection, note)
+            if not db.exists_in_db(db_connection, note):
+                db.insert_in_db(db_connection, note)
             else:
                 logging.warning("the note %s is duplicated", note_id)
                 continue
