@@ -9,12 +9,12 @@ from . import types
 from . import generation
 
 def main():
-    logging.basicConfig(
-        format='%(asctime)s\t[%(levelname)s]\t%(message)s',
-        level=logging.INFO
-    )
-
     try:
+        logging.basicConfig(
+            format='%(asctime)s\t[%(levelname)s]\t%(message)s',
+            level=logging.INFO,
+        )
+
         options = cli.parse_options()
         if not os.path.exists(options.output_path):
             os.makedirs(options.output_path)
