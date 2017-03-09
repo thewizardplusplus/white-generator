@@ -24,3 +24,7 @@ def exists_in_db(db_connection, text):
         .fetchone()
 
     return bool(counter)
+
+def close_connection_to_db(db_connection):
+    if db_connection is not None:
+        db_connection.close()
