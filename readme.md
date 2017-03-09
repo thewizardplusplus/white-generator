@@ -34,12 +34,35 @@ Utility for a generation of memes.
         * size;
         * color.
 
+## Installation
+
+Clone this repository:
+
+```
+$ git clone https://github.com/thewizardplusplus/white-generator.git
+$ cd white-generator
+```
+
+Then install the app with [pip](https://pip.pypa.io/) tool:
+
+```
+$ sudo -H pip3 install .
+```
+
+`sudo` command is required to install `white-generator` console script. If it's not required, `sudo` command can be omitted:
+
+```
+$ pip3 install .
+```
+
+But then the app should be started as `python3 -m white_generator`.
+
 ## Usage
 
 ```
-$ white_generator.py -v | --version
-$ white_generator.py -h | --help
-$ white_generator.py [options] (-f FONT_FILE | --font-file FONT_FILE) (-i INPUT_FILE | --input-file INPUT_FILE) (-o OUTPUT_PATH | --output-path OUTPUT_PATH)
+$ white-generator -v | --version
+$ white-generator -h | --help
+$ white-generator [options] (-f FONT_FILE | --font-file FONT_FILE) (-i INPUT_FILE | --input-file INPUT_FILE) (-o OUTPUT_PATH | --output-path OUTPUT_PATH)
 ```
 
 Options:
