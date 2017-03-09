@@ -1,5 +1,4 @@
 import uuid
-import argparse
 import sqlite3
 import logging
 import os
@@ -8,6 +7,8 @@ import sys
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
+
+from . import cli
 
 class ImageParameters:
     def __init__(self, width, height, background_color, background_image):
@@ -43,144 +44,6 @@ class WatermarkParameters:
         self.color = color
 
 _UUID_NAMESPACE = uuid.uuid1()
-
-def parse_options():
-    parser = argparse.ArgumentParser(
-        prog=__package__.replace('_', '-'),
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    parser.add_argument(
-        '-v',
-        '--version',
-        action='version',
-        version='White Generator, v1.2 (Copyright (C) 2017 thewizardplusplus)',
-    )
-    parser.add_argument(
-        '-i',
-        '--input-file',
-        required=True,
-        help='the path to the file with notes',
-    )
-    parser.add_argument(
-        '-o',
-        '--output-path',
-        required=True,
-        help='the path for generated images',
-    )
-    parser.add_argument(
-        '-l',
-        '--text-left',
-        type=int,
-        default=0,
-        help='the left text position',
-    )
-    parser.add_argument(
-        '-t',
-        '--text-top',
-        type=int,
-        default=0,
-        help='the top text position',
-    )
-    parser.add_argument(
-        '-R',
-        '--text-right',
-        type=int,
-        default=-1,
-        help='the horizontal text limit (-1 for a background width use)',
-    )
-    parser.add_argument(
-        '-B',
-        '--text-bottom',
-        type=int,
-        default=-1,
-        help='the vertical text limit (-1 for a background height use)',
-    )
-    parser.add_argument(
-        '-a',
-        '--text-horizontal-align',
-        choices=['left', 'center', 'right'],
-        default='center',
-        help='the text horizontal align',
-    )
-    parser.add_argument(
-        '-A',
-        '--text-vertical-align',
-        choices=['top', 'center', 'bottom'],
-        default='center',
-        help='the text vertical align',
-    )
-    parser.add_argument(
-        '-W',
-        '--image-width',
-        type=int,
-        default=640,
-        help='the image width',
-    )
-    parser.add_argument(
-        '-H',
-        '--image-height',
-        type=int,
-        default=480,
-        help='the image height',
-    )
-    parser.add_argument(
-        '-b',
-        '--image-background-color',
-        default='#ffffff',
-        help='the image background color',
-    )
-    parser.add_argument(
-        '-I',
-        '--image-background-image',
-        default='',
-        help='the path to the background image',
-    )
-    parser.add_argument(
-        '-f',
-        '--font-file',
-        required=True,
-        help='the path to the font file',
-    )
-    parser.add_argument(
-        '-s',
-        '--font-size',
-        type=int,
-        default=25,
-        help='the font size',
-    )
-    parser.add_argument(
-        '-c',
-        '--font-color',
-        default='#000000',
-        help='the font color',
-    )
-    parser.add_argument(
-        '-w',
-        '--watermark-text',
-        default='',
-        help='the watermark text (empty for disable)',
-    )
-    parser.add_argument(
-        '-S',
-        '--watermark-size',
-        type=int,
-        default=12,
-        help='the watermark font size',
-    )
-    parser.add_argument(
-        '-C',
-        '--watermark-color',
-        default='#808080',
-        help='the watermark font color',
-    )
-    parser.add_argument(
-        '-d',
-        '--database-file',
-        default='notes.db',
-        help='the path to the database file',
-    )
-
-    return parser.parse_args()
 
 def read_notes(notes_filename):
     with open(notes_filename, 'r') as notes_file:
@@ -375,7 +238,7 @@ def main():
     )
 
     try:
-        options = parse_options()
+        options = cli.parse_options()
         if not os.path.exists(options.output_path):
             os.makedirs(options.output_path)
 
