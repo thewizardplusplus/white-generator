@@ -9,45 +9,13 @@ from PIL import ImageFont
 from . import cli
 from . import io
 from . import db
-
-class ImageParameters:
-    def __init__(self, width, height, background_color, background_image):
-        self.width = width
-        self.height = height
-        self.background_color = background_color
-        self.background_image = background_image
-
-class FontParameters:
-    def __init__(self, file_, size, color):
-        self.file = file_
-        self.size = size
-        self.color = color
-
-class Rectangle:
-    def __init__(self, left, top, right, bottom):
-        self.left = left
-        self.top = top
-        self.right = right
-        self.bottom = bottom
-
-class TextParameters:
-    def __init__(self, font, rectangle, horizontal_align, vertical_align):
-        self.font = font
-        self.rectangle = rectangle
-        self.horizontal_align = horizontal_align
-        self.vertical_align = vertical_align
-
-class WatermarkParameters:
-    def __init__(self, text, size, color):
-        self.text = text
-        self.size = size
-        self.color = color
+from . import types
 
 def crop(value, minimum, maximum):
     return max(minimum, min(value, maximum))
 
 def get_text_rectangle(image_parameters, text_parameters):
-    rectangle = Rectangle(
+    rectangle = types.Rectangle(
         crop(text_parameters.rectangle.left, 0, image_parameters.width),
         crop(text_parameters.rectangle.top, 0, image_parameters.height),
         0,
@@ -209,19 +177,19 @@ def main():
 
             image = generate_image(
                 note,
-                ImageParameters(
+                types.ImageParameters(
                     options.image_width,
                     options.image_height,
                     options.image_background_color,
                     options.image_background_image,
                 ),
-                TextParameters(
-                    FontParameters(
+                types.TextParameters(
+                    types.FontParameters(
                         options.font_file,
                         options.font_size,
                         options.font_color,
                     ),
-                    Rectangle(
+                    types.Rectangle(
                         options.text_left,
                         options.text_top,
                         options.text_right,
@@ -230,7 +198,7 @@ def main():
                     options.text_horizontal_align,
                     options.text_vertical_align,
                 ),
-                WatermarkParameters(
+                types.WatermarkParameters(
                     options.watermark_text,
                     options.watermark_size,
                     options.watermark_color,
