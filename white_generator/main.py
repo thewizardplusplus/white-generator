@@ -32,32 +32,9 @@ def main():
 
             image = generation.generate_image(
                 note,
-                types.ImageParameters(
-                    options.image_width,
-                    options.image_height,
-                    options.image_background_color,
-                    options.image_background_image,
-                ),
-                types.TextParameters(
-                    types.FontParameters(
-                        options.font_file,
-                        options.font_size,
-                        options.font_color,
-                    ),
-                    types.Rectangle(
-                        options.text_left,
-                        options.text_top,
-                        options.text_right,
-                        options.text_bottom,
-                    ),
-                    options.text_horizontal_align,
-                    options.text_vertical_align,
-                ),
-                types.WatermarkParameters(
-                    options.watermark_text,
-                    options.watermark_size,
-                    options.watermark_color,
-                )
+                types.ImageParameters(options),
+                types.TextParameters(options),
+                types.WatermarkParameters(options),
             )
             image.save(
                 os.path.join(options.output_path, note_id + '.png'),
