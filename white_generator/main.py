@@ -3,6 +3,7 @@ import argparse
 import sqlite3
 import logging
 import os
+import sys
 
 from PIL import Image
 from PIL import ImageDraw
@@ -424,3 +425,4 @@ def main():
             )
     except Exception as exception:
         logging.critical(exception)
+        sys.exit(1)
