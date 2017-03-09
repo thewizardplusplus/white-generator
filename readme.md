@@ -91,19 +91,23 @@ Options:
 
 ## Screenshots
 
-![Help message, part 1](screenshots/screenshot_00.png)
+![Installation](screenshots/screenshot_00.png)
+
+Installation
+
+![Help message, part 1](screenshots/screenshot_01.png)
 
 Help message, part 1
 
-![Help message, part 2](screenshots/screenshot_01.png)
+![Help message, part 2](screenshots/screenshot_02.png)
 
 Help message, part 2
 
-![Generation of images](screenshots/screenshot_02.png)
+![Generation of images](screenshots/screenshot_03.png)
 
 Generation of images
 
-![Generated image](screenshots/screenshot_03.png)
+![Generated image](screenshots/screenshot_04.png)
 
 Generated image
 
