@@ -1,5 +1,7 @@
 import argparse
 
+from . import consts
+
 def parse_options():
     parser = argparse.ArgumentParser(
         prog=__package__.replace('_', '-'),
@@ -9,7 +11,8 @@ def parse_options():
         '-v',
         '--version',
         action='version',
-        version='White Generator, v1.2 (Copyright (C) 2017 thewizardplusplus)',
+        version='White Generator, v{:s} '.format(consts.APP_VERSION) \
+            + '(Copyright (C) 2017 thewizardplusplus)',
     )
     parser.add_argument(
         '-i',
