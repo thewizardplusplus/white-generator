@@ -91,10 +91,6 @@ Options:
 
 ## Screenshots
 
-![Installation](screenshots/screenshot_00.png)
-
-Installation
-
 ![Help message, part 1](screenshots/screenshot_01.png)
 
 Help message, part 1
