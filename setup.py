@@ -23,6 +23,7 @@ setuptools.setup(
     url='https://github.com/thewizardplusplus/' + project_name,
     packages=packages,
     install_requires=[
+        'termcolor >=1.1.0, <2.0',
         'pillow >=4.1.1, <5.0',
     ],
     python_requires='>=3.4, <4.0',
