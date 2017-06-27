@@ -1,5 +1,19 @@
 # Change Log
 
+## [v1.3](https://github.com/thewizardplusplus/white-generator/tree/v1.3) (2017-06-28)
+
+**Closed issues:**
+
+- Make a log colorful [\#15](https://github.com/thewizardplusplus/white-generator/issues/15)
+- Process of the KeyboardInterrupt exception [\#16](https://github.com/thewizardplusplus/white-generator/issues/16)
+- Use an uppercase in names of services files [\#18](https://github.com/thewizardplusplus/white-generator/issues/18)
+- Versions:
+    - Specify a package version in the \_\_init\_\_.py file [\#12](https://github.com/thewizardplusplus/white-generator/issues/12)
+    - Specify a minimal Python version in the setup.py file [\#13](https://github.com/thewizardplusplus/white-generator/issues/13)
+    - Specify dependencies versions in the setup.py file [\#14](https://github.com/thewizardplusplus/white-generator/issues/14)
+    - Refactor the version message [\#17](https://github.com/thewizardplusplus/white-generator/issues/17)
+    - Automatically set a version number in the setup.py file [\#19](https://github.com/thewizardplusplus/white-generator/issues/19)
+
 ## [v1.2](https://github.com/thewizardplusplus/white-generator/tree/v1.2) (2017-03-09)
 
 **Closed issues:**
