@@ -2,17 +2,24 @@ import argparse
 
 from . import consts
 
+class HelpFormatter(
+    argparse.RawTextHelpFormatter,
+    argparse.ArgumentDefaultsHelpFormatter,
+):
+    pass
+
 def parse_options():
     parser = argparse.ArgumentParser(
         prog=__package__.replace('_', '-'),
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        formatter_class=HelpFormatter,
     )
     parser.add_argument(
         '-v',
         '--version',
         action='version',
-        version='White Generator, v{:s} '.format(consts.APP_VERSION) \
-            + '(Copyright (C) 2017 thewizardplusplus)',
+        help='show the version message and exit',
+        version='White Generator, v{:s}\n'.format(consts.APP_VERSION) \
+            + 'Copyright (C) 2017 thewizardplusplus',
     )
     parser.add_argument(
         '-i',
