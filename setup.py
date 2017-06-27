@@ -18,7 +18,9 @@ setuptools.setup(
     author_email='thewizardplusplus@yandex.ru',
     url='https://github.com/thewizardplusplus/' + project_name,
     packages=packages,
-    install_requires=['Pillow'],
+    install_requires=[
+        'pillow >=4.1.1, <5.0',
+    ],
     entry_points={
         'console_scripts': [
             '{:s} = {:s}:main'.format(project_name, package_name),
