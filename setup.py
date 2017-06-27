@@ -1,5 +1,9 @@
 import setuptools
 import re
+import sys
+
+if not (0x030400f0 <= sys.hexversion < 0x040000a0):
+    raise Exception('requires Python >=3.4, <4.0')
 
 packages = setuptools.find_packages()
 package_name = packages[0]
@@ -21,6 +25,7 @@ setuptools.setup(
     install_requires=[
         'pillow >=4.1.1, <5.0',
     ],
+    python_requires='>=3.4, <4.0',
     entry_points={
         'console_scripts': [
             '{:s} = {:s}:main'.format(project_name, package_name),
