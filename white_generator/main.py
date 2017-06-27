@@ -50,3 +50,8 @@ def main():
     except Exception as exception:
         logging.critical(exception)
         sys.exit(1)
+    except KeyboardInterrupt:
+        # output a line break after the ^C symbol in a terminal
+        print('')
+
+        sys.exit(1)
