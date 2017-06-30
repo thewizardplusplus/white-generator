@@ -13,7 +13,7 @@ with open(os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
     package_name,
     'consts.py',
-)) as consts_file:
+), encoding='utf-8') as consts_file:
     version = re.search(
         "^APP_VERSION = '([^']+)'$",
         consts_file.read(),
