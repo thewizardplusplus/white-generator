@@ -36,26 +36,11 @@ Utility for a generation of memes.
 
 ## Installation
 
-Clone this repository:
+Install the app with [pip](https://pip.pypa.io/) tool:
 
 ```
-$ git clone https://github.com/thewizardplusplus/white-generator.git
-$ cd white-generator
+$ pip install white-generator
 ```
-
-Then install the app with [pip](https://pip.pypa.io/) tool:
-
-```
-$ sudo -H pip3 install .
-```
-
-`sudo` command is required to install `white-generator` console script. If it's not required, `sudo` command can be omitted:
-
-```
-$ pip3 install .
-```
-
-But then the app should be started as `python3 -m white_generator`.
 
 ## Usage
 
