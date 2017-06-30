@@ -66,14 +66,14 @@ def parse_options():
         '--text-horizontal-align',
         choices=['left', 'center', 'right'],
         default='center',
-        help='the text horizontal align',
+        help='the text horizontal alignment',
     )
     parser.add_argument(
         '-A',
         '--text-vertical-align',
         choices=['top', 'center', 'bottom'],
         default='center',
-        help='the text vertical align',
+        help='the text vertical alignment',
     )
     parser.add_argument(
         '-W',
@@ -98,7 +98,6 @@ def parse_options():
     parser.add_argument(
         '-I',
         '--image-background-image',
-        default='',
         help='the path to the background image',
     )
     parser.add_argument(

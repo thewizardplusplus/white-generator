@@ -10,7 +10,7 @@ def generate_image(
     text_parameters,
     watermark_parameters,
 ):
-    if len(image_parameters.background_image) == 0:
+    if image_parameters.background_image is None:
         image = Image.new(
             'RGB',
             (image_parameters.width, image_parameters.height),

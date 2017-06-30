@@ -85,6 +85,6 @@ def _get_text_position_on_axis(axis_start, axis_end, text_size, align):
     elif align in ['right', 'bottom']:
         position = axis_size - text_size
     else:
-        raise Exception('the text align is incorrect')
+        raise Exception('the text alignment is incorrect')
 
     return position + axis_start
