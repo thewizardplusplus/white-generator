@@ -1,6 +1,7 @@
 import setuptools
 import re
 import sys
+import os.path
 
 if not (0x030400f0 <= sys.hexversion < 0x040000a0):
     raise Exception('requires Python >=3.4, <4.0')
@@ -8,7 +9,11 @@ if not (0x030400f0 <= sys.hexversion < 0x040000a0):
 packages = setuptools.find_packages()
 package_name = packages[0]
 project_name = package_name.replace('_', '-')
-with open('white_generator/consts.py') as consts_file:
+with open(os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    package_name,
+    'consts.py',
+)) as consts_file:
     version = re.search(
         "^APP_VERSION = '([^']+)'$",
         consts_file.read(),
