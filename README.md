@@ -52,7 +52,7 @@ $ white-generator [options] (-f FONT_FILE | --font-file FONT_FILE) (-i INPUT_FIL
 
 Options:
 
-* `-v`, `--version` &mdash; show program's version number and exit;
+* `-v`, `--version` &mdash; show the version message and exit;
 * `-h`, `--help` &mdash; show this help message and exit;
 * `-i INPUT_FILE`, ` --input-file INPUT_FILE` &mdash; the path to the file with notes;
 * `-o OUTPUT_PATH`, ` --output-path OUTPUT_PATH` &mdash; the path for generated images;
