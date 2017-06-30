@@ -3,7 +3,7 @@ import uuid
 _UUID_NAMESPACE = uuid.uuid1()
 
 def read_notes(notes_filename):
-    with open(notes_filename, 'r') as notes_file:
+    with open(notes_filename) as notes_file:
         note = ''
         for line in notes_file:
             if len(line.rstrip()) != 0:
