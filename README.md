@@ -36,8 +36,6 @@ Utility for a generation of memes.
 
 ## Installation
 
-Install the app with [pip](https://pip.pypa.io/) tool:
-
 ```
 $ pip install white-generator
 ```
