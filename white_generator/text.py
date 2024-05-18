@@ -34,7 +34,7 @@ def fit_text(draw, text, text_parameters, font):
     if len(lines) > 1:
         return '\n'.join(
             fit_text(draw, line, text_parameters, font)
-            for line in lines,
+            for line in lines
         )
 
     words = [word.strip() for word in text.split(' ') if len(word.strip()) != 0]
