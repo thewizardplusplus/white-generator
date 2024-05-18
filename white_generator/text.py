@@ -43,7 +43,9 @@ def fit_text(draw, text, text_parameters, font):
         - text_parameters.rectangle.left
     for word in words[1:]:
         extended_text = text + ' ' + word
-        (text_width, _) = draw.multiline_textsize(extended_text, font=font)
+        (text_box_left, _, text_box_right, _) \
+            = draw.multiline_textbbox((0, 0), extended_text, font=font)
+        text_width = text_box_right - text_box_left
         if text_width <= rectangle_width:
             text = extended_text
         else:
@@ -52,13 +54,16 @@ def fit_text(draw, text, text_parameters, font):
     return text
 
 def get_text_position(draw, text, text_parameters, font):
-    (text_width, text_height) = draw.multiline_textsize(text, font=font)
+    (text_box_left, text_box_top, text_box_right, text_box_bottom) \
+        = draw.multiline_textbbox((0, 0), text, font=font)
+    text_width = text_box_right - text_box_left
     text_left = _get_text_position_on_axis(
         text_parameters.rectangle.left,
         text_parameters.rectangle.right,
         text_width,
         text_parameters.horizontal_align,
     )
+    text_height = text_box_bottom - text_box_top
     text_top = _get_text_position_on_axis(
         text_parameters.rectangle.top,
         text_parameters.rectangle.bottom,
@@ -68,8 +73,11 @@ def get_text_position(draw, text, text_parameters, font):
     return (text_left, text_top)
 
 def get_watermark_position(draw, text, image_parameters, font):
-    (text_width, text_height) = draw.textsize(text, font=font)
+    (text_box_left, text_box_top, text_box_right, text_box_bottom) \
+        = draw.textbbox((0, 0), text, font=font)
+    text_width = text_box_right - text_box_left
     text_left = image_parameters.width - text_width
+    text_height = text_box_bottom - text_box_top
     text_top = image_parameters.height - text_height
     return (text_left, text_top)
 

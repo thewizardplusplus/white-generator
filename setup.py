@@ -49,7 +49,7 @@ setuptools.setup(
     packages=packages,
     install_requires=[
         'termcolor >=1.1.0, <2.0',
-        'pillow >=4.1.1, <5.0',
+        'pillow >= 10.3.0, < 11.0.0',
     ],
     python_requires='>=3.4, <4.0',
     entry_points={
