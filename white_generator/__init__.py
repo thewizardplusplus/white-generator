@@ -1,4 +1,1 @@
-from . import consts
-from .main import main
-
-__version__ = consts.APP_VERSION
+__version__ = '1.3.0'

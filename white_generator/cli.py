@@ -1,6 +1,6 @@
 import argparse
 
-from . import consts
+from . import __version__
 
 class HelpFormatter(
     argparse.RawTextHelpFormatter,
@@ -18,7 +18,7 @@ def parse_options():
         '--version',
         action='version',
         help='show the version message and exit',
-        version='White Generator, v{:s}\n'.format(consts.APP_VERSION) \
+        version='White Generator, v{:s}\n'.format(__version__) \
             + 'Copyright (C) 2017 thewizardplusplus',
     )
     parser.add_argument(

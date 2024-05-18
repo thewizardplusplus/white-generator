@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools >= 65.1.0, < 66.0.0", "wheel >= 0.37.1, < 0.38.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "white-generator"
+requires-python = ">= 3.10.12, < 4.0.0"
+dependencies = ["termcolor >= 2.4.0, < 3.0.0", "pillow >= 10.3.0, < 11.0.0"]
+dynamic = ["version"]
+
+[project.scripts]
+white-generator = "white_generator.main:main"
+
+[tool.setuptools]
+packages = ["white_generator"]
+
+[tool.setuptools.dynamic]
+version = { attr = "white_generator.__version__" }
