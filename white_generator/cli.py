@@ -133,13 +133,13 @@ def parse_options():
         '-S',
         '--watermark-size',
         type=int,
-        default=12,
+        default=types.DEFAULT_WATERMARK_SIZE,
         help='the watermark font size',
     )
     parser.add_argument(
         '-C',
         '--watermark-color',
-        default='#808080',
+        default=types.DEFAULT_WATERMARK_COLOR,
         help='the watermark font color',
     )
     parser.add_argument(
