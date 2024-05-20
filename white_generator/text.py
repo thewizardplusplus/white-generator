@@ -86,11 +86,11 @@ def _crop(value, minimum, maximum):
 
 def _get_text_position_on_axis(axis_start, axis_end, text_size, align):
     axis_size = axis_end - axis_start
-    if align in ['left', 'top']:
+    if align in [types.HorizontalAlign.LEFT, 'top']:
         position = 0
-    elif align == 'center':
+    elif align in [types.HorizontalAlign.CENTER, 'center']:
         position = (axis_size - text_size) // 2
-    elif align in ['right', 'bottom']:
+    elif align in [types.HorizontalAlign.RIGHT, 'bottom']:
         position = axis_size - text_size
     else:
         raise Exception('the text alignment is incorrect')

@@ -1,5 +1,6 @@
 import dataclasses
 import pathlib
+import enum
 
 DEFAULT_IMAGE_WIDTH = 640
 DEFAULT_IMAGE_HEIGHT = 480
@@ -13,7 +14,6 @@ DEFAULT_RECTANGLE_TOP = 0
 DEFAULT_RECTANGLE_RIGHT = -1
 DEFAULT_RECTANGLE_BOTTOM = -1
 
-DEFAULT_TEXT_HORIZONTAL_ALIGN = 'center'
 DEFAULT_TEXT_VERTICAL_ALIGN = 'center'
 
 DEFAULT_WATERMARK_SIZE = 12
@@ -39,11 +39,19 @@ class Rectangle:
     right: int = DEFAULT_RECTANGLE_RIGHT
     bottom: int = DEFAULT_RECTANGLE_BOTTOM
 
+# TODO: replace with `enum.StrEnum` after upgrading to Python 3.11
+class HorizontalAlign(str, enum.Enum):
+    LEFT = 'left'
+    CENTER = 'center'
+    RIGHT = 'right'
+
+DEFAULT_TEXT_HORIZONTAL_ALIGN = HorizontalAlign.CENTER
+
 @dataclasses.dataclass
 class TextParameters:
     font: FontParameters
     rectangle: Rectangle = dataclasses.field(default_factory=Rectangle)
-    horizontal_align: str = DEFAULT_TEXT_HORIZONTAL_ALIGN # TODO: make this a separate type
+    horizontal_align: HorizontalAlign = DEFAULT_TEXT_HORIZONTAL_ALIGN
     vertical_align: str = DEFAULT_TEXT_VERTICAL_ALIGN # TODO: make this a separate type
 
 @dataclasses.dataclass
