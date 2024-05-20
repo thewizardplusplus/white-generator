@@ -1,6 +1,8 @@
 import argparse
+import pathlib
 
 from . import __version__
+from . import types
 
 class HelpFormatter(
     argparse.RawTextHelpFormatter,
@@ -79,25 +81,26 @@ def parse_options():
         '-W',
         '--image-width',
         type=int,
-        default=640,
+        default=types.DEFAULT_IMAGE_WIDTH,
         help='the image width',
     )
     parser.add_argument(
         '-H',
         '--image-height',
         type=int,
-        default=480,
+        default=types.DEFAULT_IMAGE_HEIGHT,
         help='the image height',
     )
     parser.add_argument(
         '-b',
         '--image-background-color',
-        default='#ffffff',
+        default=types.DEFAULT_IMAGE_BACKGROUND_COLOR,
         help='the image background color',
     )
     parser.add_argument(
         '-I',
         '--image-background-image',
+        type=pathlib.Path,
         help='the path to the background image',
     )
     parser.add_argument(
