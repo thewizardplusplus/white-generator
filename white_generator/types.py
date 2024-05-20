@@ -8,6 +8,11 @@ DEFAULT_IMAGE_BACKGROUND_COLOR = '#ffffff'
 DEFAULT_FONT_SIZE = 25
 DEFAULT_FONT_COLOR = '#000000'
 
+DEFAULT_RECTANGLE_LEFT = 0
+DEFAULT_RECTANGLE_TOP = 0
+DEFAULT_RECTANGLE_RIGHT = -1
+DEFAULT_RECTANGLE_BOTTOM = -1
+
 @dataclasses.dataclass
 class ImageParameters:
     width: int = DEFAULT_IMAGE_WIDTH
@@ -21,12 +26,12 @@ class FontParameters:
     size: int = DEFAULT_FONT_SIZE
     color: str = DEFAULT_FONT_COLOR # TODO: make this a separate type
 
+@dataclasses.dataclass
 class Rectangle:
-    def __init__(self, left, top, right, bottom):
-        self.left = left
-        self.top = top
-        self.right = right
-        self.bottom = bottom
+    left: int = DEFAULT_RECTANGLE_LEFT
+    top: int = DEFAULT_RECTANGLE_TOP
+    right: int = DEFAULT_RECTANGLE_RIGHT
+    bottom: int = DEFAULT_RECTANGLE_BOTTOM
 
 class TextParameters:
     def __init__(self, options):
@@ -36,10 +41,10 @@ class TextParameters:
             color=options.font_color,
         )
         self.rectangle = Rectangle(
-            options.text_left,
-            options.text_top,
-            options.text_right,
-            options.text_bottom,
+            left=options.text_left,
+            top=options.text_top,
+            right=options.text_right,
+            bottom=options.text_bottom,
         )
         self.horizontal_align = options.text_horizontal_align
         self.vertical_align = options.text_vertical_align

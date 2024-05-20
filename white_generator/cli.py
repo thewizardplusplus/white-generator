@@ -39,28 +39,28 @@ def parse_options():
         '-l',
         '--text-left',
         type=int,
-        default=0,
+        default=types.DEFAULT_RECTANGLE_LEFT,
         help='the left text position',
     )
     parser.add_argument(
         '-t',
         '--text-top',
         type=int,
-        default=0,
+        default=types.DEFAULT_RECTANGLE_TOP,
         help='the top text position',
     )
     parser.add_argument(
         '-R',
         '--text-right',
         type=int,
-        default=-1,
+        default=types.DEFAULT_RECTANGLE_RIGHT,
         help='the horizontal text limit (-1 for a background width use)',
     )
     parser.add_argument(
         '-B',
         '--text-bottom',
         type=int,
-        default=-1,
+        default=types.DEFAULT_RECTANGLE_BOTTOM,
         help='the vertical text limit (-1 for a background height use)',
     )
     parser.add_argument(
