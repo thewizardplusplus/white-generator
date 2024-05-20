@@ -106,6 +106,7 @@ def parse_options():
     parser.add_argument(
         '-f',
         '--font-file',
+        type=pathlib.Path,
         required=True,
         help='the path to the font file',
     )
@@ -113,13 +114,13 @@ def parse_options():
         '-s',
         '--font-size',
         type=int,
-        default=25,
+        default=types.DEFAULT_FONT_SIZE,
         help='the font size',
     )
     parser.add_argument(
         '-c',
         '--font-color',
-        default='#000000',
+        default=types.DEFAULT_FONT_COLOR,
         help='the font color',
     )
     parser.add_argument(
