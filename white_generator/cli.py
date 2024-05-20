@@ -74,8 +74,9 @@ def parse_options():
     parser.add_argument(
         '-A',
         '--text-vertical-align',
-        choices=['top', 'center', 'bottom'],
-        default=types.DEFAULT_TEXT_VERTICAL_ALIGN,
+        type=_parse_vertical_align,
+        choices=[member.value for member in types.VerticalAlign],
+        default=types.DEFAULT_TEXT_VERTICAL_ALIGN.value,
         help='the text vertical alignment',
     )
     parser.add_argument(
@@ -157,3 +158,9 @@ def _parse_horizontal_align(text: str) -> types.HorizontalAlign:
         return types.HorizontalAlign[text.upper()]
     except KeyError as exception:
         raise argparse.ArgumentTypeError(f"unknown horizontal align: {exception}") from exception
+
+def _parse_vertical_align(text: str) -> types.VerticalAlign:
+    try:
+        return types.VerticalAlign[text.upper()]
+    except KeyError as exception:
+        raise argparse.ArgumentTypeError(f"unknown vertical align: {exception}") from exception
