@@ -66,8 +66,9 @@ def parse_options():
     parser.add_argument(
         '-a',
         '--text-horizontal-align',
-        choices=['left', 'center', 'right'],
-        default=types.DEFAULT_TEXT_HORIZONTAL_ALIGN,
+        type=_parse_horizontal_align,
+        choices=[member.value for member in types.HorizontalAlign],
+        default=types.DEFAULT_TEXT_HORIZONTAL_ALIGN.value,
         help='the text horizontal alignment',
     )
     parser.add_argument(
@@ -150,3 +151,9 @@ def parse_options():
     )
 
     return parser.parse_args()
+
+def _parse_horizontal_align(text: str) -> types.HorizontalAlign:
+    try:
+        return types.HorizontalAlign[text.upper()]
+    except KeyError as exception:
+        raise argparse.ArgumentTypeError(f"unknown horizontal align: {exception}") from exception
