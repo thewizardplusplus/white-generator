@@ -14,8 +14,6 @@ DEFAULT_RECTANGLE_TOP = 0
 DEFAULT_RECTANGLE_RIGHT = -1
 DEFAULT_RECTANGLE_BOTTOM = -1
 
-DEFAULT_TEXT_VERTICAL_ALIGN = 'center'
-
 DEFAULT_WATERMARK_SIZE = 12
 DEFAULT_WATERMARK_COLOR = '#808080'
 
@@ -45,14 +43,21 @@ class HorizontalAlign(str, enum.Enum):
     CENTER = 'center'
     RIGHT = 'right'
 
+# TODO: replace with `enum.StrEnum` after upgrading to Python 3.11
+class VerticalAlign(str, enum.Enum):
+    TOP = 'top'
+    CENTER = 'center'
+    BOTTOM = 'bottom'
+
 DEFAULT_TEXT_HORIZONTAL_ALIGN = HorizontalAlign.CENTER
+DEFAULT_TEXT_VERTICAL_ALIGN = VerticalAlign.CENTER
 
 @dataclasses.dataclass
 class TextParameters:
     font: FontParameters
     rectangle: Rectangle = dataclasses.field(default_factory=Rectangle)
     horizontal_align: HorizontalAlign = DEFAULT_TEXT_HORIZONTAL_ALIGN
-    vertical_align: str = DEFAULT_TEXT_VERTICAL_ALIGN # TODO: make this a separate type
+    vertical_align: VerticalAlign = DEFAULT_TEXT_VERTICAL_ALIGN
 
 @dataclasses.dataclass
 class WatermarkParameters:
