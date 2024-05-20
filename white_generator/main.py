@@ -58,7 +58,11 @@ def main():
                     horizontal_align=options.text_horizontal_align,
                     vertical_align=options.text_vertical_align,
                 ),
-                types.WatermarkParameters(options),
+                types.WatermarkParameters(
+                    text=options.watermark_text,
+                    size=options.watermark_size,
+                    color=options.watermark_color,
+                ),
             )
             image.save(
                 os.path.join(options.output_path, note_id + '.png'),

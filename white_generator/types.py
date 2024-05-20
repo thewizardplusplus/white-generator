@@ -16,6 +16,9 @@ DEFAULT_RECTANGLE_BOTTOM = -1
 DEFAULT_TEXT_HORIZONTAL_ALIGN = 'center'
 DEFAULT_TEXT_VERTICAL_ALIGN = 'center'
 
+DEFAULT_WATERMARK_SIZE = 12
+DEFAULT_WATERMARK_COLOR = '#808080'
+
 @dataclasses.dataclass
 class ImageParameters:
     width: int = DEFAULT_IMAGE_WIDTH
@@ -43,8 +46,8 @@ class TextParameters:
     horizontal_align: str = DEFAULT_TEXT_HORIZONTAL_ALIGN # TODO: make this a separate type
     vertical_align: str = DEFAULT_TEXT_VERTICAL_ALIGN # TODO: make this a separate type
 
+@dataclasses.dataclass
 class WatermarkParameters:
-    def __init__(self, options):
-        self.text = options.watermark_text
-        self.size = options.watermark_size
-        self.color = options.watermark_color
+    text: str = ''
+    size: int = DEFAULT_WATERMARK_SIZE
+    color: str = DEFAULT_WATERMARK_COLOR # TODO: make this a separate type
