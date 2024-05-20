@@ -37,7 +37,12 @@ def main():
 
             image = generation.generate_image(
                 note,
-                types.ImageParameters(options),
+                types.ImageParameters(
+                    width=options.image_width,
+                    height=options.image_height,
+                    background_color=options.image_background_color,
+                    background_image=options.image_background_image,
+                ),
                 types.TextParameters(options),
                 types.WatermarkParameters(options),
             )

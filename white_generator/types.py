@@ -1,9 +1,16 @@
+import dataclasses
+import pathlib
+
+DEFAULT_IMAGE_WIDTH = 640
+DEFAULT_IMAGE_HEIGHT = 480
+DEFAULT_IMAGE_BACKGROUND_COLOR = '#ffffff'
+
+@dataclasses.dataclass
 class ImageParameters:
-    def __init__(self, options):
-        self.width = options.image_width
-        self.height = options.image_height
-        self.background_color = options.image_background_color
-        self.background_image = options.image_background_image
+    width: int = DEFAULT_IMAGE_WIDTH
+    height: int = DEFAULT_IMAGE_HEIGHT
+    background_color: str = DEFAULT_IMAGE_BACKGROUND_COLOR # TODO: make this a separate type
+    background_image: pathlib.Path | None = None
 
 class FontParameters:
     def __init__(self, options):
