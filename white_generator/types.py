@@ -13,6 +13,9 @@ DEFAULT_RECTANGLE_TOP = 0
 DEFAULT_RECTANGLE_RIGHT = -1
 DEFAULT_RECTANGLE_BOTTOM = -1
 
+DEFAULT_TEXT_HORIZONTAL_ALIGN = 'center'
+DEFAULT_TEXT_VERTICAL_ALIGN = 'center'
+
 @dataclasses.dataclass
 class ImageParameters:
     width: int = DEFAULT_IMAGE_WIDTH
@@ -33,21 +36,12 @@ class Rectangle:
     right: int = DEFAULT_RECTANGLE_RIGHT
     bottom: int = DEFAULT_RECTANGLE_BOTTOM
 
+@dataclasses.dataclass
 class TextParameters:
-    def __init__(self, options):
-        self.font = FontParameters(
-            file=options.font_file,
-            size=options.font_size,
-            color=options.font_color,
-        )
-        self.rectangle = Rectangle(
-            left=options.text_left,
-            top=options.text_top,
-            right=options.text_right,
-            bottom=options.text_bottom,
-        )
-        self.horizontal_align = options.text_horizontal_align
-        self.vertical_align = options.text_vertical_align
+    font: FontParameters
+    rectangle: Rectangle = dataclasses.field(default_factory=Rectangle)
+    horizontal_align: str = DEFAULT_TEXT_HORIZONTAL_ALIGN # TODO: make this a separate type
+    vertical_align: str = DEFAULT_TEXT_VERTICAL_ALIGN # TODO: make this a separate type
 
 class WatermarkParameters:
     def __init__(self, options):

@@ -67,14 +67,14 @@ def parse_options():
         '-a',
         '--text-horizontal-align',
         choices=['left', 'center', 'right'],
-        default='center',
+        default=types.DEFAULT_TEXT_HORIZONTAL_ALIGN,
         help='the text horizontal alignment',
     )
     parser.add_argument(
         '-A',
         '--text-vertical-align',
         choices=['top', 'center', 'bottom'],
-        default='center',
+        default=types.DEFAULT_TEXT_VERTICAL_ALIGN,
         help='the text vertical alignment',
     )
     parser.add_argument(

@@ -43,7 +43,21 @@ def main():
                     background_color=options.image_background_color,
                     background_image=options.image_background_image,
                 ),
-                types.TextParameters(options),
+                types.TextParameters(
+                    font=types.FontParameters(
+                        file=options.font_file,
+                        size=options.font_size,
+                        color=options.font_color,
+                    ),
+                    rectangle=types.Rectangle(
+                        left=options.text_left,
+                        top=options.text_top,
+                        right=options.text_right,
+                        bottom=options.text_bottom,
+                    ),
+                    horizontal_align=options.text_horizontal_align,
+                    vertical_align=options.text_vertical_align,
+                ),
                 types.WatermarkParameters(options),
             )
             image.save(
