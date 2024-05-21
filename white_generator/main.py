@@ -1,4 +1,3 @@
-import os
 import sys
 
 import termcolor
@@ -7,7 +6,6 @@ from . import logger
 from . import cli
 from . import io
 from . import db
-from . import types
 from . import generation
 
 def main():
@@ -15,8 +13,8 @@ def main():
 
     try:
         options = cli.parse_options()
-        if not os.path.exists(options.output_path):
-            os.makedirs(options.output_path)
+        if not options.output_path.exists():
+            options.output_path.mkdir(parents=True)
 
         db_connection = db.connect_to_db(options.database_file)
         for note in io.read_notes(options.input_file):
@@ -37,37 +35,11 @@ def main():
 
             image = generation.generate_image(
                 note,
-                types.ImageParameters(
-                    width=options.image_width,
-                    height=options.image_height,
-                    background_color=options.image_background_color,
-                    background_image=options.image_background_image,
-                ),
-                types.TextParameters(
-                    font=types.FontParameters(
-                        file=options.font_file,
-                        size=options.font_size,
-                        color=options.font_color,
-                    ),
-                    rectangle=types.Rectangle(
-                        left=options.text_left,
-                        top=options.text_top,
-                        right=options.text_right,
-                        bottom=options.text_bottom,
-                    ),
-                    horizontal_align=options.text_horizontal_align,
-                    vertical_align=options.text_vertical_align,
-                ),
-                types.WatermarkParameters(
-                    text=options.watermark_text,
-                    size=options.watermark_size,
-                    color=options.watermark_color,
-                ),
+                options.image,
+                options.text,
+                options.watermark,
             )
-            image.save(
-                os.path.join(options.output_path, note_id + '.png'),
-                'PNG',
-            )
+            image.save(options.output_path / (note_id + '.png'), 'PNG')
     except Exception as exception:
         logger.get_logger().error(exception)
         sys.exit(1)

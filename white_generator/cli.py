@@ -1,8 +1,39 @@
 import argparse
 import pathlib
+import dataclasses
+import pathlib
+import typing
 
 from . import __version__
 from . import types
+
+DEFAULT_DATABASE_FILE = pathlib.Path('notes.db')
+
+@dataclasses.dataclass
+class Options:
+    input_file: pathlib.Path | None = None
+    output_path: pathlib.Path | None = None
+    database_file: pathlib.Path = DEFAULT_DATABASE_FILE
+    image: types.ImageParameters = \
+        dataclasses.field(default_factory=types.ImageParameters)
+    text: types.TextParameters = \
+        dataclasses.field(default_factory=types.TextParameters)
+    watermark: types.WatermarkParameters = \
+        dataclasses.field(default_factory=types.WatermarkParameters)
+
+    def __post_init__(self) -> None:
+        self._initialized = True
+
+    def __setattr__(self, name: str, value: typing.Any) -> None:
+        if not hasattr(self, '_initialized') or hasattr(self, name):
+            super().__setattr__(name, value)
+            return
+
+        _set_attr_with_prefix("image_", self.image, name, value)
+        _set_attr_with_prefix("text_font_", self.text.font, name, value)
+        _set_attr_with_prefix("text_rectangle_", self.text.rectangle, name, value)
+        _set_attr_with_prefix("text_", self.text, name, value)
+        _set_attr_with_prefix("watermark_", self.watermark, name, value)
 
 class HelpFormatter(
     argparse.RawTextHelpFormatter,
@@ -26,39 +57,41 @@ def parse_options():
     parser.add_argument(
         '-i',
         '--input-file',
+        type=pathlib.Path,
         required=True,
         help='the path to the file with notes',
     )
     parser.add_argument(
         '-o',
         '--output-path',
+        type=pathlib.Path,
         required=True,
         help='the path for generated images',
     )
     parser.add_argument(
         '-l',
-        '--text-left',
+        '--text-rectangle-left',
         type=int,
         default=types.DEFAULT_RECTANGLE_LEFT,
         help='the left text position',
     )
     parser.add_argument(
         '-t',
-        '--text-top',
+        '--text-rectangle-top',
         type=int,
         default=types.DEFAULT_RECTANGLE_TOP,
         help='the top text position',
     )
     parser.add_argument(
         '-R',
-        '--text-right',
+        '--text-rectangle-right',
         type=int,
         default=types.DEFAULT_RECTANGLE_RIGHT,
         help='the horizontal text limit (-1 for a background width use)',
     )
     parser.add_argument(
         '-B',
-        '--text-bottom',
+        '--text-rectangle-bottom',
         type=int,
         default=types.DEFAULT_RECTANGLE_BOTTOM,
         help='the vertical text limit (-1 for a background height use)',
@@ -108,21 +141,21 @@ def parse_options():
     )
     parser.add_argument(
         '-f',
-        '--font-file',
+        '--text-font-file',
         type=pathlib.Path,
         required=True,
         help='the path to the font file',
     )
     parser.add_argument(
         '-s',
-        '--font-size',
+        '--text-font-size',
         type=int,
         default=types.DEFAULT_FONT_SIZE,
         help='the font size',
     )
     parser.add_argument(
         '-c',
-        '--font-color',
+        '--text-font-color',
         type=types.Color.parse,
         default=types.DEFAULT_FONT_COLOR,
         help='the font color',
@@ -149,11 +182,12 @@ def parse_options():
     parser.add_argument(
         '-d',
         '--database-file',
-        default='notes.db',
+        type=pathlib.Path,
+        default=DEFAULT_DATABASE_FILE,
         help='the path to the database file',
     )
 
-    return parser.parse_args()
+    return parser.parse_args(namespace=Options())
 
 def _parse_horizontal_align(text: str) -> types.HorizontalAlign:
     try:
@@ -166,3 +200,7 @@ def _parse_vertical_align(text: str) -> types.VerticalAlign:
         return types.VerticalAlign[text.upper()]
     except KeyError as exception:
         raise argparse.ArgumentTypeError(f"unknown vertical align: {exception}") from exception
+
+def _set_attr_with_prefix(prefix: str, obj: object, name: str, value: typing.Any) -> None:
+    if name.startswith(prefix):
+        setattr(obj, name.removeprefix(prefix), value)
