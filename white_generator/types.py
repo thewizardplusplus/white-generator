@@ -89,6 +89,6 @@ class TextParameters:
 
 @dataclasses.dataclass
 class WatermarkParameters:
-    text: str = ''
+    text: str | None = None
     size: int = DEFAULT_WATERMARK_SIZE
     color: Color = DEFAULT_WATERMARK_COLOR

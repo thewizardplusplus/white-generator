@@ -38,7 +38,7 @@ def generate_image(
         fill=tuple(text_parameters.font.color),
     )
 
-    if len(watermark_parameters.text) != 0:
+    if watermark_parameters.text is not None:
         watermark_font = ImageFont.truetype(
             text_parameters.font.file,
             watermark_parameters.size,

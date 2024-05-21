@@ -130,8 +130,7 @@ def parse_options():
     parser.add_argument(
         '-w',
         '--watermark-text',
-        default='',
-        help='the watermark text (empty for disable)',
+        help='the watermark text',
     )
     parser.add_argument(
         '-S',
