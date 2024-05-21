@@ -10,6 +10,9 @@ def generate_image(
     text_parameters,
     watermark_parameters,
 ):
+    if text_parameters.font.file is None:
+        raise Exception("text font file is required")
+
     if image_parameters.background_image is None:
         image = Image.new(
             'RGB',

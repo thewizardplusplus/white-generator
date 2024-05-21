@@ -54,7 +54,7 @@ class ImageParameters:
 
 @dataclasses.dataclass
 class FontParameters:
-    file: pathlib.Path
+    file: pathlib.Path | None = None
     size: int = DEFAULT_FONT_SIZE
     color: Color = DEFAULT_FONT_COLOR
 
@@ -82,7 +82,7 @@ DEFAULT_TEXT_VERTICAL_ALIGN = VerticalAlign.CENTER
 
 @dataclasses.dataclass
 class TextParameters:
-    font: FontParameters
+    font: FontParameters = dataclasses.field(default_factory=FontParameters)
     rectangle: Rectangle = dataclasses.field(default_factory=Rectangle)
     horizontal_align: HorizontalAlign = DEFAULT_TEXT_HORIZONTAL_ALIGN
     vertical_align: VerticalAlign = DEFAULT_TEXT_VERTICAL_ALIGN
