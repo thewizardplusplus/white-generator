@@ -100,16 +100,16 @@ def parse_options():
         '-a',
         '--text-horizontal-align',
         type=_parse_horizontal_align,
-        choices=[member.value for member in types.HorizontalAlign],
-        default=types.DEFAULT_TEXT_HORIZONTAL_ALIGN.value,
+        choices=tuple(types.HorizontalAlign),
+        default=types.DEFAULT_TEXT_HORIZONTAL_ALIGN,
         help='the text horizontal alignment',
     )
     parser.add_argument(
         '-A',
         '--text-vertical-align',
         type=_parse_vertical_align,
-        choices=[member.value for member in types.VerticalAlign],
-        default=types.DEFAULT_TEXT_VERTICAL_ALIGN.value,
+        choices=tuple(types.VerticalAlign),
+        default=types.DEFAULT_TEXT_VERTICAL_ALIGN,
         help='the text vertical alignment',
     )
     parser.add_argument(
