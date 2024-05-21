@@ -14,7 +14,7 @@ def generate_image(
         image = Image.new(
             'RGB',
             (image_parameters.width, image_parameters.height),
-            image_parameters.background_color,
+            tuple(image_parameters.background_color),
         )
     else:
         image = Image.open(image_parameters.background_image)
@@ -35,7 +35,7 @@ def generate_image(
         fitted_note,
         align=text_parameters.horizontal_align,
         font=text_font,
-        fill=text_parameters.font.color,
+        fill=tuple(text_parameters.font.color),
     )
 
     if len(watermark_parameters.text) != 0:
@@ -52,7 +52,7 @@ def generate_image(
             ),
             watermark_parameters.text,
             font=watermark_font,
-            fill=watermark_parameters.color,
+            fill=tuple(watermark_parameters.color),
         )
 
     return image

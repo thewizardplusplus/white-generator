@@ -62,14 +62,14 @@ Options:
 * `-A {top,center,bottom}`, ` --text-vertical-align {top,center,bottom}` &mdash; the text vertical alignment (default: `center`);
 * `-W IMAGE_WIDTH`, ` --image-width IMAGE_WIDTH` &mdash; the image width (default: 640);
 * `-H IMAGE_HEIGHT`, ` --image-height IMAGE_HEIGHT` &mdash; the image height (default: 480);
-* `-b IMAGE_BACKGROUND_COLOR`, ` --image-background-color IMAGE_BACKGROUND_COLOR` &mdash; the image background color (default: `#ffffff`);
+* `-b IMAGE_BACKGROUND_COLOR`, ` --image-background-color IMAGE_BACKGROUND_COLOR` &mdash; the image background color (default: `rgb(255, 255, 255)`);
 * `-I IMAGE_BACKGROUND_IMAGE`, ` --image-background-image IMAGE_BACKGROUND_IMAGE` &mdash; the path to the background image (default: none);
 * `-f FONT_FILE`, ` --font-file FONT_FILE` &mdash; the path to the font file;
 * `-s FONT_SIZE`, ` --font-size FONT_SIZE` &mdash; the font size (default: 25);
-* `-c FONT_COLOR`, ` --font-color FONT_COLOR` &mdash; the font color (default: `#000000`);
+* `-c FONT_COLOR`, ` --font-color FONT_COLOR` &mdash; the font color (default: `rgb(0, 0, 0)`);
 * `-w WATERMARK_TEXT`, ` --watermark-text WATERMARK_TEXT` &mdash; the watermark text (empty for disable; default: empty);
 * `-S WATERMARK_SIZE`, ` --watermark-size WATERMARK_SIZE` &mdash; the watermark font size (default: 12);
-* `-C WATERMARK_COLOR`, ` --watermark-color WATERMARK_COLOR` &mdash; the watermark font color (default: `#808080`);
+* `-C WATERMARK_COLOR`, ` --watermark-color WATERMARK_COLOR` &mdash; the watermark font color (default: `rgb(128, 128, 128)`);
 * `-d DATABASE_FILE`, ` --database-file DATABASE_FILE` &mdash; the path to the database file (default: `notes.db`).
 
 ## Screenshots

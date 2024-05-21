@@ -96,6 +96,7 @@ def parse_options():
     parser.add_argument(
         '-b',
         '--image-background-color',
+        type=types.Color.parse,
         default=types.DEFAULT_IMAGE_BACKGROUND_COLOR,
         help='the image background color',
     )
@@ -122,6 +123,7 @@ def parse_options():
     parser.add_argument(
         '-c',
         '--font-color',
+        type=types.Color.parse,
         default=types.DEFAULT_FONT_COLOR,
         help='the font color',
     )
@@ -141,6 +143,7 @@ def parse_options():
     parser.add_argument(
         '-C',
         '--watermark-color',
+        type=types.Color.parse,
         default=types.DEFAULT_WATERMARK_COLOR,
         help='the watermark font color',
     )
