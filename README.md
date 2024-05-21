@@ -67,7 +67,7 @@ Options:
 * `-f FONT_FILE`, ` --font-file FONT_FILE` &mdash; the path to the font file;
 * `-s FONT_SIZE`, ` --font-size FONT_SIZE` &mdash; the font size (default: 25);
 * `-c FONT_COLOR`, ` --font-color FONT_COLOR` &mdash; the font color (default: `rgb(0, 0, 0)`);
-* `-w WATERMARK_TEXT`, ` --watermark-text WATERMARK_TEXT` &mdash; the watermark text (empty for disable; default: empty);
+* `-w WATERMARK_TEXT`, ` --watermark-text WATERMARK_TEXT` &mdash; the watermark text (default: none);
 * `-S WATERMARK_SIZE`, ` --watermark-size WATERMARK_SIZE` &mdash; the watermark font size (default: 12);
 * `-C WATERMARK_COLOR`, ` --watermark-color WATERMARK_COLOR` &mdash; the watermark font color (default: `rgb(128, 128, 128)`);
 * `-d DATABASE_FILE`, ` --database-file DATABASE_FILE` &mdash; the path to the database file (default: `notes.db`).
