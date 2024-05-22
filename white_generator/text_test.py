@@ -151,3 +151,161 @@ class TestFitText(unittest.TestCase):
       unittest.mock.call((0, 0), 'line #2: with', self.font),
       unittest.mock.call((0, 0), 'line #2:\nwith wrapping', self.font),
     ])
+
+class TestGetTextPosition(unittest.TestCase):
+  def setUp(self) -> None:
+    self.image_draw = unittest.mock.create_autospec(ImageDraw.ImageDraw)
+    self.font = ImageFont.load_default()
+
+  def test_left_top(self) -> None:
+    self.image_draw.multiline_textbbox.side_effect = [(0, 0, 150, 75)]
+
+    text_parameters = types.TextParameters(
+      rectangle=types.Rectangle(left=40, top=60, right=240, bottom=160),
+      horizontal_align=types.HorizontalAlign.LEFT,
+      vertical_align=types.VerticalAlign.TOP,
+    )
+    (text_left, text_top) = \
+      text.get_text_position(self.image_draw, 'text', text_parameters, self.font)
+
+    self.assertEqual(text_left, 40)
+    self.assertEqual(text_top, 60)
+    self.image_draw.multiline_textbbox.assert_has_calls([
+      unittest.mock.call((0, 0), 'text', self.font),
+    ])
+
+  def test_center_top(self) -> None:
+    self.image_draw.multiline_textbbox.side_effect = [(0, 0, 150, 75)]
+
+    text_parameters = types.TextParameters(
+      rectangle=types.Rectangle(left=40, top=60, right=240, bottom=160),
+      horizontal_align=types.HorizontalAlign.CENTER,
+      vertical_align=types.VerticalAlign.TOP,
+    )
+    (text_left, text_top) = \
+      text.get_text_position(self.image_draw, 'text', text_parameters, self.font)
+
+    self.assertEqual(text_left, 65)
+    self.assertEqual(text_top, 60)
+    self.image_draw.multiline_textbbox.assert_has_calls([
+      unittest.mock.call((0, 0), 'text', self.font),
+    ])
+
+  def test_right_top(self) -> None:
+    self.image_draw.multiline_textbbox.side_effect = [(0, 0, 150, 75)]
+
+    text_parameters = types.TextParameters(
+      rectangle=types.Rectangle(left=40, top=60, right=240, bottom=160),
+      horizontal_align=types.HorizontalAlign.RIGHT,
+      vertical_align=types.VerticalAlign.TOP,
+    )
+    (text_left, text_top) = \
+      text.get_text_position(self.image_draw, 'text', text_parameters, self.font)
+
+    self.assertEqual(text_left, 90)
+    self.assertEqual(text_top, 60)
+    self.image_draw.multiline_textbbox.assert_has_calls([
+      unittest.mock.call((0, 0), 'text', self.font),
+    ])
+
+  def test_left_center(self) -> None:
+    self.image_draw.multiline_textbbox.side_effect = [(0, 0, 150, 75)]
+
+    text_parameters = types.TextParameters(
+      rectangle=types.Rectangle(left=40, top=60, right=240, bottom=160),
+      horizontal_align=types.HorizontalAlign.LEFT,
+      vertical_align=types.VerticalAlign.CENTER,
+    )
+    (text_left, text_top) = \
+      text.get_text_position(self.image_draw, 'text', text_parameters, self.font)
+
+    self.assertEqual(text_left, 40)
+    self.assertEqual(text_top, 72)
+    self.image_draw.multiline_textbbox.assert_has_calls([
+      unittest.mock.call((0, 0), 'text', self.font),
+    ])
+
+  def test_center_center(self) -> None:
+    self.image_draw.multiline_textbbox.side_effect = [(0, 0, 150, 75)]
+
+    text_parameters = types.TextParameters(
+      rectangle=types.Rectangle(left=40, top=60, right=240, bottom=160),
+      horizontal_align=types.HorizontalAlign.CENTER,
+      vertical_align=types.VerticalAlign.CENTER,
+    )
+    (text_left, text_top) = \
+      text.get_text_position(self.image_draw, 'text', text_parameters, self.font)
+
+    self.assertEqual(text_left, 65)
+    self.assertEqual(text_top, 72)
+    self.image_draw.multiline_textbbox.assert_has_calls([
+      unittest.mock.call((0, 0), 'text', self.font),
+    ])
+
+  def test_right_center(self) -> None:
+    self.image_draw.multiline_textbbox.side_effect = [(0, 0, 150, 75)]
+
+    text_parameters = types.TextParameters(
+      rectangle=types.Rectangle(left=40, top=60, right=240, bottom=160),
+      horizontal_align=types.HorizontalAlign.RIGHT,
+      vertical_align=types.VerticalAlign.CENTER,
+    )
+    (text_left, text_top) = \
+      text.get_text_position(self.image_draw, 'text', text_parameters, self.font)
+
+    self.assertEqual(text_left, 90)
+    self.assertEqual(text_top, 72)
+    self.image_draw.multiline_textbbox.assert_has_calls([
+      unittest.mock.call((0, 0), 'text', self.font),
+    ])
+
+  def test_left_bottom(self) -> None:
+    self.image_draw.multiline_textbbox.side_effect = [(0, 0, 150, 75)]
+
+    text_parameters = types.TextParameters(
+      rectangle=types.Rectangle(left=40, top=60, right=240, bottom=160),
+      horizontal_align=types.HorizontalAlign.LEFT,
+      vertical_align=types.VerticalAlign.BOTTOM,
+    )
+    (text_left, text_top) = \
+      text.get_text_position(self.image_draw, 'text', text_parameters, self.font)
+
+    self.assertEqual(text_left, 40)
+    self.assertEqual(text_top, 85)
+    self.image_draw.multiline_textbbox.assert_has_calls([
+      unittest.mock.call((0, 0), 'text', self.font),
+    ])
+
+  def test_center_bottom(self) -> None:
+    self.image_draw.multiline_textbbox.side_effect = [(0, 0, 150, 75)]
+
+    text_parameters = types.TextParameters(
+      rectangle=types.Rectangle(left=40, top=60, right=240, bottom=160),
+      horizontal_align=types.HorizontalAlign.CENTER,
+      vertical_align=types.VerticalAlign.BOTTOM,
+    )
+    (text_left, text_top) = \
+      text.get_text_position(self.image_draw, 'text', text_parameters, self.font)
+
+    self.assertEqual(text_left, 65)
+    self.assertEqual(text_top, 85)
+    self.image_draw.multiline_textbbox.assert_has_calls([
+      unittest.mock.call((0, 0), 'text', self.font),
+    ])
+
+  def test_right_bottom(self) -> None:
+    self.image_draw.multiline_textbbox.side_effect = [(0, 0, 150, 75)]
+
+    text_parameters = types.TextParameters(
+      rectangle=types.Rectangle(left=40, top=60, right=240, bottom=160),
+      horizontal_align=types.HorizontalAlign.RIGHT,
+      vertical_align=types.VerticalAlign.BOTTOM,
+    )
+    (text_left, text_top) = \
+      text.get_text_position(self.image_draw, 'text', text_parameters, self.font)
+
+    self.assertEqual(text_left, 90)
+    self.assertEqual(text_top, 85)
+    self.image_draw.multiline_textbbox.assert_has_calls([
+      unittest.mock.call((0, 0), 'text', self.font),
+    ])
