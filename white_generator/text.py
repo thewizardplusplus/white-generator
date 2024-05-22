@@ -39,8 +39,8 @@ def fit_text(draw, text, text_parameters, font):
 
     words = [word.strip() for word in text.split(' ') if len(word.strip()) != 0]
     text = words[0]
-    rectangle_width = text_parameters.rectangle.right \
-        - text_parameters.rectangle.left
+    rectangle_width = \
+        text_parameters.rectangle.right - text_parameters.rectangle.left
     for word in words[1:]:
         extended_text = text + ' ' + word
         (text_box_left, _, text_box_right, _) \
