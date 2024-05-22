@@ -309,3 +309,21 @@ class TestGetTextPosition(unittest.TestCase):
     self.image_draw.multiline_textbbox.assert_has_calls([
       unittest.mock.call((0, 0), 'text', self.font),
     ])
+
+class TestGetWatermarkPosition(unittest.TestCase):
+  def setUp(self) -> None:
+    self.image_draw = unittest.mock.create_autospec(ImageDraw.ImageDraw)
+    self.font = ImageFont.load_default()
+
+  def test_regular(self) -> None:
+    self.image_draw.multiline_textbbox.side_effect = [(0, 0, 50, 10)]
+
+    image_parameters = types.ImageParameters(width=640, height=480)
+    (text_left, text_top) = \
+      text.get_watermark_position(self.image_draw, 'text', image_parameters, self.font)
+
+    self.assertEqual(text_left, 590)
+    self.assertEqual(text_top, 470)
+    self.image_draw.multiline_textbbox.assert_has_calls([
+      unittest.mock.call((0, 0), 'text', self.font),
+    ])

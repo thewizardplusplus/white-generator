@@ -74,7 +74,7 @@ def get_text_position(draw, text, text_parameters, font):
 
 def get_watermark_position(draw, text, image_parameters, font):
     (text_box_left, text_box_top, text_box_right, text_box_bottom) \
-        = draw.textbbox((0, 0), text, font=font)
+        = draw.multiline_textbbox((0, 0), text, font=font)
     text_width = text_box_right - text_box_left
     text_left = image_parameters.width - text_width
     text_height = text_box_bottom - text_box_top
