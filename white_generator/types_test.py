@@ -30,3 +30,13 @@ class TestColor(unittest.TestCase):
   def test_parse_error(self) -> None:
     with self.assertRaises(ValueError):
       types.Color.parse('invalid-color')
+
+  def test_iter_rgb(self) -> None:
+    color = types.Color(red=12, green=23, blue=42)
+    color_values = tuple(color)
+    self.assertEqual(color_values, (12, 23, 42))
+
+  def test_iter_rgba(self) -> None:
+    color = types.Color(red=5, green=12, blue=23, alpha=42)
+    color_values = tuple(color)
+    self.assertEqual(color_values, (5, 12, 23, 42))
