@@ -21,6 +21,7 @@ class Options:
         dataclasses.field(default_factory=types.TextParameters)
     watermark: types.WatermarkParameters = \
         dataclasses.field(default_factory=types.WatermarkParameters)
+    no_database: bool = False
 
     def __post_init__(self) -> None:
         self._initialized = True
@@ -185,6 +186,11 @@ def parse_options():
         type=pathlib.Path,
         default=DEFAULT_DATABASE_FILE,
         help='the path to the database file',
+    )
+    parser.add_argument(
+        "--no-database",
+        action="store_true",
+        help="don't filter notes by database",
     )
 
     return parser.parse_args(namespace=Options())

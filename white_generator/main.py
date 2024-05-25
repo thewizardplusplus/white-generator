@@ -24,14 +24,15 @@ def main():
                 termcolor.colored(note_id, 'blue'),
             )
 
-            if not db.exists_in_db(db_connection, note):
-                db.insert_in_db(db_connection, note)
-            else:
-                logger.get_logger().warning(
-                    'note %s is duplicated',
-                    termcolor.colored(note_id, 'blue'),
-                )
-                continue
+            if not options.no_database:
+                if not db.exists_in_db(db_connection, note):
+                    db.insert_in_db(db_connection, note)
+                else:
+                    logger.get_logger().warning(
+                        'note %s is duplicated',
+                        termcolor.colored(note_id, 'blue'),
+                    )
+                    continue
 
             image = generation.generate_image(
                 note,
