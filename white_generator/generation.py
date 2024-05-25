@@ -1,3 +1,5 @@
+import pathlib
+
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
@@ -10,9 +12,6 @@ def generate_image(
     text_parameters,
     watermark_parameters,
 ):
-    if text_parameters.font.file is None:
-        raise Exception("text font file is required")
-
     if image_parameters.background_image is None:
         image = Image.new(
             'RGB',
@@ -22,16 +21,14 @@ def generate_image(
     else:
         image = Image.open(image_parameters.background_image)
         (image_parameters.width, image_parameters.height) = image.size
+
     text_parameters.rectangle = text.get_text_rectangle(
         image_parameters,
         text_parameters,
     )
 
     draw = ImageDraw.Draw(image)
-    text_font = ImageFont.truetype(
-        text_parameters.font.file,
-        text_parameters.font.size,
-    )
+    text_font = load_font(text_parameters.font.file, text_parameters.font.size)
     fitted_note = text.fit_text(draw, note, text_parameters, text_font)
     draw.multiline_text(
         text.get_text_position(draw, fitted_note, text_parameters, text_font),
@@ -42,11 +39,11 @@ def generate_image(
     )
 
     if watermark_parameters.text is not None:
-        watermark_font = ImageFont.truetype(
+        watermark_font = load_font(
             text_parameters.font.file,
             watermark_parameters.size,
         )
-        draw.text(
+        draw.multiline_text(
             text.get_watermark_position(
                 draw,
                 watermark_parameters.text,
@@ -59,3 +56,12 @@ def generate_image(
         )
 
     return image
+
+def load_font(
+    font_file: pathlib.Path | None,
+    font_size: int,
+) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
+    if font_file is None:
+        return ImageFont.load_default(font_size)
+
+    return ImageFont.truetype(font_file, font_size)

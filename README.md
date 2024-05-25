@@ -19,7 +19,9 @@ Utility for a generation of memes.
         * height;
         * image (it supports same formats as [Pillow](http://python-pillow.org/) library);
     * text:
-        * font (it supports only TrueType fonts);
+        * font:
+            * it supports only TrueType fonts;
+            * it's optional (if none, the [Pillow](http://python-pillow.org/) library's default font is used);
         * size;
         * color;
         * left;
@@ -45,7 +47,7 @@ $ pip install white-generator
 ```
 $ white-generator -v | --version
 $ white-generator -h | --help
-$ white-generator [options] (-f TEXT_FONT_FILE | --text-font-file TEXT_FONT_FILE) (-i INPUT_FILE | --input-file INPUT_FILE)
+$ white-generator [options] (-i INPUT_FILE | --input-file INPUT_FILE)
 ```
 
 Options:
@@ -64,7 +66,7 @@ Options:
 * `-H IMAGE_HEIGHT`, ` --image-height IMAGE_HEIGHT` &mdash; the image height (default: 480);
 * `-b IMAGE_BACKGROUND_COLOR`, ` --image-background-color IMAGE_BACKGROUND_COLOR` &mdash; the image background color (default: `rgb(255, 255, 255)`);
 * `-I IMAGE_BACKGROUND_IMAGE`, ` --image-background-image IMAGE_BACKGROUND_IMAGE` &mdash; the path to the background image (default: none);
-* `-f TEXT_FONT_FILE`, ` --text-font-file TEXT_FONT_FILE` &mdash; the path to the font file;
+* `-f TEXT_FONT_FILE`, ` --text-font-file TEXT_FONT_FILE` &mdash; the path to the font file (if none, the Pillow library's default font is used; default: none);
 * `-s TEXT_FONT_SIZE`, ` --text-font-size TEXT_FONT_SIZE` &mdash; the font size (default: 25);
 * `-c TEXT_FONT_COLOR`, ` --text-font-color TEXT_FONT_COLOR` &mdash; the font color (default: `rgb(0, 0, 0)`);
 * `-w WATERMARK_TEXT`, ` --watermark-text WATERMARK_TEXT` &mdash; the watermark text (default: none);
