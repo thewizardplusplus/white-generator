@@ -144,8 +144,7 @@ def parse_options():
         '-f',
         '--text-font-file',
         type=pathlib.Path,
-        required=True,
-        help='the path to the font file',
+        help="the path to the font file (if none, the Pillow library's default font is used)",
     )
     parser.add_argument(
         '-s',
