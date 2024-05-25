@@ -10,7 +10,7 @@ Utility for a generation of memes.
 * a support of horizontal and vertical text alignments;
 * a read of memes texts from a file (each text is separated from another by a double newline);
 * a support single-line and multiline memes texts;
-* a protection against duplicate memes texts;
+* a protection against duplicate memes texts (it's optional);
 * a support of a watermark (it's optional);
 * meme settings:
     * background:
@@ -72,7 +72,8 @@ Options:
 * `-w WATERMARK_TEXT`, ` --watermark-text WATERMARK_TEXT` &mdash; the watermark text (default: none);
 * `-S WATERMARK_SIZE`, ` --watermark-size WATERMARK_SIZE` &mdash; the watermark font size (default: 12);
 * `-C WATERMARK_COLOR`, ` --watermark-color WATERMARK_COLOR` &mdash; the watermark font color (default: `rgb(128, 128, 128)`);
-* `-d DATABASE_FILE`, ` --database-file DATABASE_FILE` &mdash; the path to the database file (default: `notes.db`).
+* `-d DATABASE_FILE`, ` --database-file DATABASE_FILE` &mdash; the path to the database file (default: `notes.db`);
+* `--no-database` &mdash; don't filter notes by database.
 
 ## Screenshots
 
