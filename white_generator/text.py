@@ -27,7 +27,7 @@ def get_text_rectangle(image_parameters, text_parameters):
     return rectangle
 
 def fit_text(draw, text, text_parameters, font):
-    if len(text.strip()) == 0:
+    if text.strip() == '':
         return text
 
     lines = text.split('\n')
@@ -37,7 +37,7 @@ def fit_text(draw, text, text_parameters, font):
             for line in lines
         )
 
-    words = [word.strip() for word in text.split(' ') if len(word.strip()) != 0]
+    words = [word.strip() for word in text.split(' ') if word.strip() != '']
     text = words[0]
     rectangle_width = \
         text_parameters.rectangle.right - text_parameters.rectangle.left
