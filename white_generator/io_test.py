@@ -94,11 +94,11 @@ class TestReadNotes(unittest.TestCase):
       'note #2; line #1\nnote #2; line #2',
     ])
 
-  def test_trailing_spaces_on_note_endings(self) -> None:
+  def test_extra_spaces_on_note_boundaries(self) -> None:
     self._write_notes_content(
-      'note #1; line #1\nnote #1; line #2  \n'
+      '  note #1; line #1\nnote #1; line #2  \n'
         + '\n'
-        + 'note #2; line #1\nnote #2; line #2  ',
+        + '  note #2; line #1\nnote #2; line #2  ',
     )
 
     notes = list(io.read_notes(self._get_notes_filename()))
@@ -107,11 +107,11 @@ class TestReadNotes(unittest.TestCase):
       'note #2; line #1\nnote #2; line #2',
     ])
 
-  def test_trailing_spaces_on_line_endings(self) -> None:
+  def test_extra_spaces_on_line_boundaries(self) -> None:
     self._write_notes_content(
-      'note #1; line #1  \nnote #1; line #2  \n'
+      '  note #1; line #1  \n  note #1; line #2  \n'
         + '\n'
-        + 'note #2; line #1  \nnote #2; line #2  ',
+        + '  note #2; line #1  \n  note #2; line #2  ',
     )
 
     notes = list(io.read_notes(self._get_notes_filename()))
