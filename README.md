@@ -45,7 +45,7 @@ $ pip install white-generator
 ```
 $ white-generator -v | --version
 $ white-generator -h | --help
-$ white-generator [options] (-f TEXT_FONT_FILE | --text-font-file TEXT_FONT_FILE) (-i INPUT_FILE | --input-file INPUT_FILE) (-o OUTPUT_PATH | --output-path OUTPUT_PATH)
+$ white-generator [options] (-f TEXT_FONT_FILE | --text-font-file TEXT_FONT_FILE) (-i INPUT_FILE | --input-file INPUT_FILE)
 ```
 
 Options:
@@ -53,7 +53,7 @@ Options:
 * `-v`, `--version` &mdash; show the version message and exit;
 * `-h`, `--help` &mdash; show this help message and exit;
 * `-i INPUT_FILE`, ` --input-file INPUT_FILE` &mdash; the path to the file with notes;
-* `-o OUTPUT_PATH`, ` --output-path OUTPUT_PATH` &mdash; the path for generated images;
+* `-o OUTPUT_PATH`, ` --output-path OUTPUT_PATH` &mdash; the path for generated images (default: `output`);
 * `-l TEXT_RECTANGLE_LEFT`, ` --text-rectangle-left TEXT_RECTANGLE_LEFT` &mdash; the left text position (default: 0);
 * `-t TEXT_RECTANGLE_TOP`, ` --text-rectangle-top TEXT_RECTANGLE_TOP` &mdash; the top text position (default: 0);
 * `-R TEXT_RECTANGLE_RIGHT`, ` --text-rectangle-right TEXT_RECTANGLE_RIGHT` &mdash; the horizontal text limit (-1 for a background width use; default: -1);
