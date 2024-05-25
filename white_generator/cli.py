@@ -7,12 +7,13 @@ import typing
 from . import __version__
 from . import types
 
+DEFAULT_OUTPUT_PATH = pathlib.Path('output')
 DEFAULT_DATABASE_FILE = pathlib.Path('notes.db')
 
 @dataclasses.dataclass
 class Options:
     input_file: pathlib.Path | None = None
-    output_path: pathlib.Path | None = None
+    output_path: pathlib.Path = DEFAULT_OUTPUT_PATH
     database_file: pathlib.Path = DEFAULT_DATABASE_FILE
     image: types.ImageParameters = \
         dataclasses.field(default_factory=types.ImageParameters)
@@ -65,7 +66,7 @@ def parse_options():
         '-o',
         '--output-path',
         type=pathlib.Path,
-        required=True,
+        default=DEFAULT_OUTPUT_PATH,
         help='the path for generated images',
     )
     parser.add_argument(
