@@ -8,13 +8,11 @@ from . import __version__
 from . import types
 
 DEFAULT_OUTPUT_PATH = pathlib.Path('output')
-DEFAULT_DATABASE_FILE = pathlib.Path('notes.db')
 
 @dataclasses.dataclass
 class Options:
     input_file: pathlib.Path | None = None
     output_path: pathlib.Path = DEFAULT_OUTPUT_PATH
-    database_file: pathlib.Path = DEFAULT_DATABASE_FILE
     image: types.ImageParameters = \
         dataclasses.field(default_factory=types.ImageParameters)
     text: types.TextParameters = \
@@ -181,13 +179,6 @@ def parse_options():
         type=types.Color.parse,
         default=types.DEFAULT_WATERMARK_COLOR,
         help='the watermark font color',
-    )
-    parser.add_argument(
-        '-d',
-        '--database-file',
-        type=pathlib.Path,
-        default=DEFAULT_DATABASE_FILE,
-        help='the path to the database file',
     )
     parser.add_argument(
         "--no-database",

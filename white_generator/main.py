@@ -16,7 +16,7 @@ def main():
         if not options.output_path.exists():
             options.output_path.mkdir(parents=True)
 
-        db_connection = db.connect_to_db(options.database_file)
+        db_connection = db.connect_to_db()
         for note in io.read_notes(options.input_file):
             note_id = io.generate_note_id(note)
             logger.get_logger().info(
