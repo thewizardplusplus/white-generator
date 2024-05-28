@@ -1,6 +1,8 @@
 import sqlite3
+import pathlib
 
-def connect_to_db(db_file):
+def connect_to_db():
+    db_file = _get_app_dir() / 'notes.db'
     db_connection = sqlite3.connect(db_file)
     with db_connection:
         db_connection.execute('''CREATE TABLE IF NOT EXISTS notes (
@@ -21,3 +23,9 @@ def exists_in_db(db_connection, text):
         .fetchone()
 
     return bool(counter)
+
+def _get_app_dir() -> pathlib.Path:
+    app_dir = pathlib.Path.home() / ('.' + __package__.replace('_', '-'))
+    app_dir.mkdir(parents=True, exist_ok=True)
+
+    return app_dir
