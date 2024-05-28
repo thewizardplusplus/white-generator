@@ -22,7 +22,7 @@ def generate_image(
         image = Image.open(image_parameters.background_image)
         (image_parameters.width, image_parameters.height) = image.size
 
-    text_parameters.rectangle = text.get_text_rectangle(
+    text_parameters.rectangle = text.fit_text_rectangle(
         image_parameters,
         text_parameters,
     )
