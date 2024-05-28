@@ -25,9 +25,9 @@ Utility for a generation of memes.
         * size;
         * color;
         * left;
-        * rigth;
+        * rigth (if the value is negative, the image width is added to it);
         * top;
-        * bottom;
+        * bottom (if the value is negative, the image height is added to it);
         * horizontal alignment;
         * vertical alignment;
     * watermark:
@@ -58,8 +58,8 @@ Options:
 * `-o OUTPUT_PATH`, ` --output-path OUTPUT_PATH` &mdash; the path for generated images (default: `output`);
 * `-l TEXT_RECTANGLE_LEFT`, ` --text-rectangle-left TEXT_RECTANGLE_LEFT` &mdash; the left text position (default: 0);
 * `-t TEXT_RECTANGLE_TOP`, ` --text-rectangle-top TEXT_RECTANGLE_TOP` &mdash; the top text position (default: 0);
-* `-R TEXT_RECTANGLE_RIGHT`, ` --text-rectangle-right TEXT_RECTANGLE_RIGHT` &mdash; the horizontal text limit (-1 for a background width use; default: -1);
-* `-B TEXT_RECTANGLE_BOTTOM`, ` --text-rectangle-bottom TEXT_RECTANGLE_BOTTOM` &mdash; the vertical text limit (-1 for a background height use; default: -1);
+* `-R TEXT_RECTANGLE_RIGHT`, ` --text-rectangle-right TEXT_RECTANGLE_RIGHT` &mdash; the horizontal text limit (if the value is negative, the image width is added to it; default: -1);
+* `-B TEXT_RECTANGLE_BOTTOM`, ` --text-rectangle-bottom TEXT_RECTANGLE_BOTTOM` &mdash; the vertical text limit (if the value is negative, the image height is added to it; default: -1);
 * `-a {left,center,right}`, ` --text-horizontal-align {left,center,right}` &mdash; the text horizontal alignment (default: `center`);
 * `-A {top,center,bottom}`, ` --text-vertical-align {top,center,bottom}` &mdash; the text vertical alignment (default: `center`);
 * `-W IMAGE_WIDTH`, ` --image-width IMAGE_WIDTH` &mdash; the image width (default: 640);

@@ -1,30 +1,25 @@
 from . import types
 
-def get_text_rectangle(image_parameters, text_parameters):
-    rectangle = types.Rectangle(
-        _crop(text_parameters.rectangle.left, 0, image_parameters.width),
-        _crop(text_parameters.rectangle.top, 0, image_parameters.height),
-        0,
-        0,
-    )
-    if text_parameters.rectangle.right != -1:
-        rectangle.right = _crop(
+def fit_text_rectangle(image_parameters, text_parameters):
+    text_left = _crop(text_parameters.rectangle.left, 0, image_parameters.width)
+    text_top = _crop(text_parameters.rectangle.top, 0, image_parameters.height)
+    text_right = _crop(
+        _add_modulus_to_negative(
             text_parameters.rectangle.right,
-            rectangle.left,
             image_parameters.width,
-        )
-    else:
-        rectangle.right = image_parameters.width
-    if text_parameters.rectangle.bottom != -1:
-        rectangle.bottom = _crop(
+        ),
+        text_left,
+        image_parameters.width,
+    )
+    text_bottom = _crop(
+        _add_modulus_to_negative(
             text_parameters.rectangle.bottom,
-            rectangle.top,
             image_parameters.height,
-        )
-    else:
-        rectangle.bottom = image_parameters.height
-
-    return rectangle
+        ),
+        text_top,
+        image_parameters.height,
+    )
+    return types.Rectangle(text_left, text_top, text_right, text_bottom)
 
 def fit_text(draw, text, text_parameters, font):
     if text.strip() == '':
@@ -81,6 +76,9 @@ def get_watermark_position(draw, text, image_parameters, font):
     text_top = image_parameters.height - text_height
     return (text_left, text_top)
 
+def _add_modulus_to_negative(value: int, modulus: int) -> int:
+    return value if value > 0 else value + modulus
+
 def _crop(value, minimum, maximum):
     return max(minimum, min(value, maximum))
 
@@ -93,6 +91,6 @@ def _get_text_position_on_axis(axis_start, axis_end, text_size, align):
     elif align in [types.HorizontalAlign.RIGHT, types.VerticalAlign.BOTTOM]:
         position = axis_size - text_size
     else:
-        raise Exception('the text alignment is incorrect')
+        raise Exception('text alignment is incorrect')
 
     return position + axis_start

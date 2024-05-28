@@ -89,14 +89,16 @@ def parse_options():
         '--text-rectangle-right',
         type=int,
         default=types.DEFAULT_RECTANGLE_RIGHT,
-        help='the horizontal text limit (-1 for a background width use)',
+        help='the horizontal text limit ' \
+            + '(if the value is negative, the image width is added to it)',
     )
     parser.add_argument(
         '-B',
         '--text-rectangle-bottom',
         type=int,
         default=types.DEFAULT_RECTANGLE_BOTTOM,
-        help='the vertical text limit (-1 for a background height use)',
+        help='the vertical text limit ' \
+            + '(if the value is negative, the image height is added to it)',
     )
     parser.add_argument(
         '-a',
