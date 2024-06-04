@@ -1,7 +1,7 @@
 import sqlite3
 import pathlib
 
-def connect_to_db():
+def connect_to_db() -> sqlite3.Connection:
     db_file = _get_app_dir() / 'notes.db'
     db_connection = sqlite3.connect(db_file)
     with db_connection:
@@ -13,11 +13,11 @@ def connect_to_db():
 
     return db_connection
 
-def insert_in_db(db_connection, text):
+def insert_in_db(db_connection: sqlite3.Connection, text: str) -> None:
     with db_connection:
         db_connection.execute('INSERT INTO notes(text) VALUES(?)', (text,))
 
-def exists_in_db(db_connection, text):
+def exists_in_db(db_connection: sqlite3.Connection, text: str) -> bool:
     (counter,) = db_connection \
         .execute('SELECT count(*) FROM notes WHERE text=?', (text,)) \
         .fetchone()
