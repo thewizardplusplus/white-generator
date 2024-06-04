@@ -1,6 +1,12 @@
+from PIL import ImageDraw
+from PIL import ImageFont
+
 from . import types
 
-def fit_text_rectangle(image_parameters, text_parameters):
+def fit_text_rectangle(
+    image_parameters: types.ImageParameters,
+    text_parameters: types.TextParameters,
+) -> types.Rectangle:
     text_left = _crop(text_parameters.rectangle.left, 0, image_parameters.width)
     text_top = _crop(text_parameters.rectangle.top, 0, image_parameters.height)
     text_right = _crop(
@@ -21,7 +27,12 @@ def fit_text_rectangle(image_parameters, text_parameters):
     )
     return types.Rectangle(text_left, text_top, text_right, text_bottom)
 
-def fit_text(draw, text, text_parameters, font):
+def fit_text(
+    draw: ImageDraw.ImageDraw,
+    text: str,
+    text_parameters: types.TextParameters,
+    font: ImageFont.FreeTypeFont | ImageFont.ImageFont,
+) -> str:
     if text.strip() == '':
         return text
 
@@ -48,7 +59,12 @@ def fit_text(draw, text, text_parameters, font):
 
     return text
 
-def get_text_position(draw, text, text_parameters, font):
+def get_text_position(
+    draw: ImageDraw.ImageDraw,
+    text: str,
+    text_parameters: types.TextParameters,
+    font: ImageFont.FreeTypeFont | ImageFont.ImageFont,
+) -> tuple[int, int]:
     (text_box_left, text_box_top, text_box_right, text_box_bottom) \
         = draw.multiline_textbbox((0, 0), text, font=font)
     text_width = text_box_right - text_box_left
@@ -67,7 +83,12 @@ def get_text_position(draw, text, text_parameters, font):
     )
     return (text_left, text_top)
 
-def get_watermark_position(draw, text, image_parameters, font):
+def get_watermark_position(
+    draw: ImageDraw.ImageDraw,
+    text: str,
+    image_parameters: types.ImageParameters,
+    font: ImageFont.FreeTypeFont | ImageFont.ImageFont,
+) -> tuple[int, int]:
     (text_box_left, text_box_top, text_box_right, text_box_bottom) \
         = draw.multiline_textbbox((0, 0), text, font=font)
     text_width = text_box_right - text_box_left
@@ -79,10 +100,15 @@ def get_watermark_position(draw, text, image_parameters, font):
 def _add_modulus_to_negative(value: int, modulus: int) -> int:
     return value if value > 0 else value + modulus
 
-def _crop(value, minimum, maximum):
+def _crop(value: int, minimum: int, maximum: int) -> int:
     return max(minimum, min(value, maximum))
 
-def _get_text_position_on_axis(axis_start, axis_end, text_size, align):
+def _get_text_position_on_axis(
+    axis_start: int,
+    axis_end: int,
+    text_size: int,
+    align: types.HorizontalAlign | types.VerticalAlign,
+) -> int:
     axis_size = axis_end - axis_start
     if align in [types.HorizontalAlign.LEFT, types.VerticalAlign.TOP]:
         position = 0
