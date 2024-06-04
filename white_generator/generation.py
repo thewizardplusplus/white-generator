@@ -5,13 +5,14 @@ from PIL import ImageDraw
 from PIL import ImageFont
 
 from . import text
+from . import types
 
 def generate_image(
-    note,
-    image_parameters,
-    text_parameters,
-    watermark_parameters,
-):
+    note: str,
+    image_parameters: types.ImageParameters,
+    text_parameters: types.TextParameters,
+    watermark_parameters: types.WatermarkParameters,
+) -> Image.Image:
     if image_parameters.background_image is None:
         image = Image.new(
             'RGB',
