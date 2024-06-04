@@ -41,7 +41,7 @@ class HelpFormatter(
 ):
     pass
 
-def parse_options():
+def parse_options() -> Options:
     parser = argparse.ArgumentParser(
         prog=__package__.replace('_', '-'),
         formatter_class=HelpFormatter,

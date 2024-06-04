@@ -13,6 +13,8 @@ def main():
 
     try:
         options = cli.parse_options()
+        assert options.input_file is not None
+
         if not options.output_path.exists():
             options.output_path.mkdir(parents=True)
 
