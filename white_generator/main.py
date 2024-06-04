@@ -8,7 +8,7 @@ from . import io
 from . import db
 from . import generation
 
-def main():
+def main() -> None:
     logger.init_logger()
 
     try:
@@ -47,7 +47,5 @@ def main():
         logger.get_logger().error(exception)
         sys.exit(1)
     except KeyboardInterrupt:
-        # output a line break after the ^C symbol in a terminal
-        print('')
-
+        print('') # output a line break after the ^C symbol in a terminal
         sys.exit(1)
