@@ -22,7 +22,7 @@ class Color:
         (red, green, blue, *rest_values) = ImageColor.getrgb(text)
         return Color(red, green, blue, rest_values[0] if rest_values else None)
 
-    def __iter__(self) -> typing.Iterable[int]:
+    def __iter__(self) -> typing.Iterator[int]:
         values: _ColorValues = dataclasses.asdict(self).values()
         yield from (value for value in values if value is not None)
 
