@@ -8,6 +8,8 @@ from . import logger
 from . import io
 
 class TestReadNotes(unittest.TestCase):
+  _tmpDir: tempfile.TemporaryDirectory[str]
+
   @classmethod
   def setUpClass(self) -> None:
     logger.init_logger()
@@ -120,7 +122,7 @@ class TestReadNotes(unittest.TestCase):
       'note #2; line #1\nnote #2; line #2',
     ])
 
-  def _get_notes_filename(self) -> None:
+  def _get_notes_filename(self) -> pathlib.Path:
     return pathlib.Path(self._tmpDir.name) / 'notes.txt'
 
   def _write_notes_content(self, notes_content: str) -> None:

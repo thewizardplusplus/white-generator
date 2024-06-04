@@ -1,8 +1,10 @@
 import uuid
+import pathlib
+import typing
 
 _UUID_NAMESPACE = uuid.uuid1()
 
-def read_notes(notes_filename):
+def read_notes(notes_filename: pathlib.Path) -> typing.Iterable[str]:
     with open(notes_filename) as notes_file:
         note = ''
         for line in notes_file:
@@ -20,5 +22,5 @@ def read_notes(notes_filename):
         if stripped_note != '':
             yield stripped_note
 
-def generate_note_id(note):
+def generate_note_id(note: str) -> str:
     return str(uuid.uuid5(_UUID_NAMESPACE, note))
