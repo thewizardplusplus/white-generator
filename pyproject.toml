@@ -27,6 +27,8 @@ packages = ["white_generator"]
 version = { attr = "white_generator.__version__" }
 
 [tool.mypy]
+mypy_path = "$MYPY_CONFIG_FILE_DIR/stubs"
+
 disallow_any_unimported = true
 # disallow_any_expr = true
 disallow_any_decorated = true
