@@ -8,7 +8,6 @@ import collections.abc
 from PIL import ImageColor
 
 _ColorValues: typing.TypeAlias = collections.abc.ValuesView[int | None]
-_ColorTuple: typing.TypeAlias = tuple[int, int, int] | tuple[int, int, int, int]
 
 @dataclasses.dataclass
 class Color:
@@ -27,7 +26,9 @@ class Color:
         yield from (value for value in values if value is not None)
 
     def __str__(self) -> str:
-        values: _ColorTuple = tuple(self)
+        values = tuple(self)
+        assert len(values) == 3 or len(values) == 4
+
         return f'rgb{"a" if len(values) == 4 else ""}{values}'
 
 DEFAULT_IMAGE_WIDTH = 640
