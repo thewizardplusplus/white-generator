@@ -52,6 +52,7 @@ class ImageParameters:
     height: int = DEFAULT_IMAGE_HEIGHT
     background_color: Color = DEFAULT_IMAGE_BACKGROUND_COLOR
     background_image: pathlib.Path | None = None
+    background_image_no_resizing: bool = False
 
 @dataclasses.dataclass
 class FontParameters:

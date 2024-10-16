@@ -185,6 +185,12 @@ def parse_options() -> Options:
         action="store_true",
         help="don't filter notes by database",
     )
+    parser.add_argument(
+        "--no-resizing",
+        action="store_true",
+        dest="image_background_image_no_resizing",
+        help="don't resize the background image",
+    )
 
     return parser.parse_args(namespace=Options())
 
