@@ -96,4 +96,4 @@ Generated image
 
 The MIT License (MIT)
 
-Copyright &copy; 2017 thewizardplusplus
+Copyright &copy; 2017, 2024 thewizardplusplus
