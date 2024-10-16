@@ -72,7 +72,8 @@ Options:
 * `-w WATERMARK_TEXT`, ` --watermark-text WATERMARK_TEXT` &mdash; the watermark text (default: none);
 * `-S WATERMARK_SIZE`, ` --watermark-size WATERMARK_SIZE` &mdash; the watermark font size (default: 12);
 * `-C WATERMARK_COLOR`, ` --watermark-color WATERMARK_COLOR` &mdash; the watermark font color (default: `rgb(128, 128, 128)`);
-* `--no-database` &mdash; don't filter notes by database.
+* `--no-database` &mdash; don't filter notes by database;
+* `--no-resizing` &mdash; don't resize the background image.
 
 ## Screenshots
 
