@@ -1,4 +1,5 @@
 import pathlib
+import dataclasses
 
 from PIL import Image
 from PIL import ImageDraw
@@ -19,36 +20,48 @@ def generate_image(
             (image_parameters.width, image_parameters.height),
             tuple(image_parameters.background_color),
         )
+        updated_image_parameters = image_parameters
     else:
         image = Image.open(image_parameters.background_image)
-        (image_parameters.width, image_parameters.height) = image.size
+        (image_width, image_height) = image.size
+        updated_image_parameters = dataclasses.replace(
+            image_parameters,
+            width=image_width,
+            height=image_height,
+        )
 
-    text_parameters.rectangle = text.fit_text_rectangle(
-        image_parameters,
+    updated_text_parameters = dataclasses.replace(
         text_parameters,
+        rectangle=text.fit_text_rectangle(
+            updated_image_parameters,
+            text_parameters,
+        ),
     )
 
     draw = ImageDraw.Draw(image)
-    text_font = load_font(text_parameters.font.file, text_parameters.font.size)
-    fitted_note = text.fit_text(draw, note, text_parameters, text_font)
+    text_font = load_font(
+        updated_text_parameters.font.file,
+        updated_text_parameters.font.size,
+    )
+    fitted_note = text.fit_text(draw, note, updated_text_parameters, text_font)
     draw.multiline_text(
-        text.get_text_position(draw, fitted_note, text_parameters, text_font),
+        text.get_text_position(draw, fitted_note, updated_text_parameters, text_font),
         fitted_note,
-        align=text_parameters.horizontal_align,
+        align=updated_text_parameters.horizontal_align,
         font=text_font,
-        fill=tuple(text_parameters.font.color),
+        fill=tuple(updated_text_parameters.font.color),
     )
 
     if watermark_parameters.text is not None:
         watermark_font = load_font(
-            text_parameters.font.file,
+            updated_text_parameters.font.file,
             watermark_parameters.size,
         )
         draw.multiline_text(
             text.get_watermark_position(
                 draw,
                 watermark_parameters.text,
-                image_parameters,
+                updated_image_parameters,
                 watermark_font,
             ),
             watermark_parameters.text,

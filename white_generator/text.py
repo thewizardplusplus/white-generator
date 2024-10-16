@@ -44,20 +44,20 @@ def fit_text(
         )
 
     words = [word.strip() for word in text.split(' ') if word.strip() != '']
-    text = words[0]
+    fitted_text = words[0]
     rectangle_width = \
         text_parameters.rectangle.right - text_parameters.rectangle.left
     for word in words[1:]:
-        extended_text = text + ' ' + word
+        extended_fitted_text = fitted_text + ' ' + word
         (text_box_left, _, text_box_right, _) \
-            = draw.multiline_textbbox((0, 0), extended_text, font=font)
+            = draw.multiline_textbbox((0, 0), extended_fitted_text, font=font)
         text_width = text_box_right - text_box_left
         if text_width <= rectangle_width:
-            text = extended_text
+            fitted_text = extended_fitted_text
         else:
-            text = text + '\n' + word
+            fitted_text += '\n' + word
 
-    return text
+    return fitted_text
 
 def get_text_position(
     draw: ImageDraw.ImageDraw,
