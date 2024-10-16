@@ -50,3 +50,8 @@ class TestColor(unittest.TestCase):
     color = types.Color(red=5, green=12, blue=23, alpha=42)
     color_representation = str(color)
     self.assertEqual(color_representation, 'rgba(5, 12, 23, 42)')
+
+class TestImageParameters(unittest.TestCase):
+  def test_size_property(self) -> None:
+    image_parameters = types.ImageParameters(width=640, height=480)
+    self.assertEqual(image_parameters.size, (640, 480))

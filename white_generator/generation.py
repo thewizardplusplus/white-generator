@@ -18,16 +18,16 @@ def generate_image(
     if image_parameters.background_image is None:
         image = Image.new(
             'RGB',
-            (image_parameters.width, image_parameters.height),
+            image_parameters.size,
             tuple(image_parameters.background_color),
         )
     else:
         image = Image.open(image_parameters.background_image)
 
         if not image_parameters.no_resizing \
-            and image.size != (image_parameters.width, image_parameters.height):
+            and image.size != image_parameters.size:
             image = image.resize(
-                (image_parameters.width, image_parameters.height),
+                image_parameters.size,
                 image_parameters.resizing_filter,
             )
         else:
