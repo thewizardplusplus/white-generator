@@ -5,6 +5,7 @@ import enum
 import typing
 import collections.abc
 
+from PIL import Image
 from PIL import ImageColor
 
 _ColorValues: typing.TypeAlias = collections.abc.ValuesView[int | None]
@@ -34,6 +35,7 @@ class Color:
 DEFAULT_IMAGE_WIDTH = 640
 DEFAULT_IMAGE_HEIGHT = 480
 DEFAULT_IMAGE_BACKGROUND_COLOR = Color.parse('rgb(255, 255, 255)')
+DEFAULT_IMAGE_BACKGROUND_IMAGE_RESIZING_FILTER = Image.Resampling.LANCZOS
 
 DEFAULT_FONT_SIZE = 25
 DEFAULT_FONT_COLOR = Color.parse('rgb(0, 0, 0)')
@@ -52,6 +54,8 @@ class ImageParameters:
     height: int = DEFAULT_IMAGE_HEIGHT
     background_color: Color = DEFAULT_IMAGE_BACKGROUND_COLOR
     background_image: pathlib.Path | None = None
+    background_image_resizing_filter: Image.Resampling = \
+        DEFAULT_IMAGE_BACKGROUND_IMAGE_RESIZING_FILTER
     background_image_no_resizing: bool = False
 
 @dataclasses.dataclass
