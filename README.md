@@ -17,7 +17,9 @@ Utility for a generation of memes.
         * color;
         * width;
         * height;
-        * image (it supports same formats as [Pillow](http://python-pillow.org/) library);
+        * image:
+            * it supports the same formats as [Pillow](http://python-pillow.org/) library;
+            * it'll be resized to the specified size (it's optional);
         * resizing filter;
     * text:
         * font:

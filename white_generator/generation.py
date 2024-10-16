@@ -14,21 +14,29 @@ def generate_image(
     text_parameters: types.TextParameters,
     watermark_parameters: types.WatermarkParameters,
 ) -> Image.Image:
+    updated_image_parameters = image_parameters
     if image_parameters.background_image is None:
         image = Image.new(
             'RGB',
             (image_parameters.width, image_parameters.height),
             tuple(image_parameters.background_color),
         )
-        updated_image_parameters = image_parameters
     else:
         image = Image.open(image_parameters.background_image)
-        (image_width, image_height) = image.size
-        updated_image_parameters = dataclasses.replace(
-            image_parameters,
-            width=image_width,
-            height=image_height,
-        )
+
+        if not image_parameters.no_resizing \
+            and image.size != (image_parameters.width, image_parameters.height):
+            image = image.resize(
+                (image_parameters.width, image_parameters.height),
+                image_parameters.resizing_filter,
+            )
+        else:
+            (image_width, image_height) = image.size
+            updated_image_parameters = dataclasses.replace(
+                image_parameters,
+                width=image_width,
+                height=image_height,
+            )
 
     updated_text_parameters = dataclasses.replace(
         text_parameters,
