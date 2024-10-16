@@ -4,6 +4,8 @@ import dataclasses
 import pathlib
 import typing
 
+from PIL import Image
+
 from . import __version__
 from . import types
 
@@ -142,6 +144,14 @@ def parse_options() -> Options:
         help='the path to the background image',
     )
     parser.add_argument(
+        '-F',
+        '--image-background-image-resizing-filter',
+        type=_parse_image_resampling,
+        choices=tuple(Image.Resampling),
+        default=types.DEFAULT_IMAGE_BACKGROUND_IMAGE_RESIZING_FILTER,
+        help='the resizing filter for the background image',
+    )
+    parser.add_argument(
         '-f',
         '--text-font-file',
         type=pathlib.Path,
@@ -205,6 +215,12 @@ def _parse_vertical_align(text: str) -> types.VerticalAlign:
         return types.VerticalAlign[text.upper()]
     except KeyError as exception:
         raise argparse.ArgumentTypeError(f"unknown vertical align: {exception}") from exception
+
+def _parse_image_resampling(text: str) -> Image.Resampling:
+    try:
+        return Image.Resampling[text.upper()]
+    except KeyError as exception:
+        raise argparse.ArgumentTypeError(f"unknown image resampling: {exception}") from exception
 
 def _set_attr_with_prefix(prefix: str, obj: object, name: str, value: typing.Any) -> None:
     if name.startswith(prefix):

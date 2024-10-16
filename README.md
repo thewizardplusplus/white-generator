@@ -18,6 +18,7 @@ Utility for a generation of memes.
         * width;
         * height;
         * image (it supports same formats as [Pillow](http://python-pillow.org/) library);
+        * resizing filter;
     * text:
         * font:
             * it supports only TrueType fonts;
@@ -66,6 +67,7 @@ Options:
 * `-H IMAGE_HEIGHT`, ` --image-height IMAGE_HEIGHT` &mdash; the image height (default: 480);
 * `-b IMAGE_BACKGROUND_COLOR`, ` --image-background-color IMAGE_BACKGROUND_COLOR` &mdash; the image background color (default: `rgb(255, 255, 255)`);
 * `-I IMAGE_BACKGROUND_IMAGE`, ` --image-background-image IMAGE_BACKGROUND_IMAGE` &mdash; the path to the background image (default: none);
+* `-F {nearest,box,bilinear,hamming,bicubic,lanczos}`, ` --image-background-image-resizing-filter {nearest,box,bilinear,hamming,bicubic,lanczos}` &mdash; the resizing filter for the background image (default: `lanczos`);
 * `-f TEXT_FONT_FILE`, ` --text-font-file TEXT_FONT_FILE` &mdash; the path to the font file (if none, the Pillow library's default font is used; default: none);
 * `-s TEXT_FONT_SIZE`, ` --text-font-size TEXT_FONT_SIZE` &mdash; the font size (default: 25);
 * `-c TEXT_FONT_COLOR`, ` --text-font-color TEXT_FONT_COLOR` &mdash; the font color (default: `rgb(0, 0, 0)`);
