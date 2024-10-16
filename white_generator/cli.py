@@ -145,10 +145,10 @@ def parse_options() -> Options:
     )
     parser.add_argument(
         '-F',
-        '--image-background-image-resizing-filter',
+        '--image-resizing-filter',
         type=_parse_image_resampling,
         choices=tuple(Image.Resampling),
-        default=types.DEFAULT_IMAGE_BACKGROUND_IMAGE_RESIZING_FILTER,
+        default=types.DEFAULT_IMAGE_RESIZING_FILTER,
         help='the resizing filter for the background image',
     )
     parser.add_argument(
@@ -198,7 +198,7 @@ def parse_options() -> Options:
     parser.add_argument(
         "--no-resizing",
         action="store_true",
-        dest="image_background_image_no_resizing",
+        dest="image_no_resizing",
         help="don't resize the background image",
     )
 
