@@ -57,6 +57,10 @@ class ImageParameters:
     resizing_filter: Image.Resampling = DEFAULT_IMAGE_RESIZING_FILTER
     no_resizing: bool = False
 
+    @property
+    def size(self) -> tuple[int, int]:
+        return (self.width, self.height)
+
 @dataclasses.dataclass
 class FontParameters:
     file: pathlib.Path | None = None
