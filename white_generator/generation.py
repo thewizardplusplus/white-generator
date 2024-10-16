@@ -1,4 +1,5 @@
 import pathlib
+import dataclasses
 
 from PIL import Image
 from PIL import ImageDraw
@@ -19,12 +20,18 @@ def generate_image(
             (image_parameters.width, image_parameters.height),
             tuple(image_parameters.background_color),
         )
+        updated_image_parameters = image_parameters
     else:
         image = Image.open(image_parameters.background_image)
-        (image_parameters.width, image_parameters.height) = image.size
+        (image_width, image_height) = image.size
+        updated_image_parameters = dataclasses.replace(
+            image_parameters,
+            width=image_width,
+            height=image_height,
+        )
 
     text_parameters.rectangle = text.fit_text_rectangle(
-        image_parameters,
+        updated_image_parameters,
         text_parameters,
     )
 
@@ -48,7 +55,7 @@ def generate_image(
             text.get_watermark_position(
                 draw,
                 watermark_parameters.text,
-                image_parameters,
+                updated_image_parameters,
                 watermark_font,
             ),
             watermark_parameters.text,
