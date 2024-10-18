@@ -94,7 +94,7 @@ def get_watermark_position(
     text_width = text_box_right - text_box_left
     text_left = image_parameters.width - text_width
     text_height = text_box_bottom - text_box_top
-    text_top = image_parameters.height - text_height
+    text_top = image_parameters.height - text_height - _get_font_descent(font)
     return (text_left, text_top)
 
 def _add_modulus_to_negative(value: int, modulus: int) -> int:
