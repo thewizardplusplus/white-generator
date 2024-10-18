@@ -120,3 +120,12 @@ def _get_text_position_on_axis(
         raise Exception('text alignment is incorrect')
 
     return position + axis_start
+
+def _get_font_descent(
+    font: ImageFont.FreeTypeFont | ImageFont.ImageFont,
+) -> int:
+    if not isinstance(font, ImageFont.FreeTypeFont):
+        return 0
+
+    (_, font_descent) = font.getmetrics()
+    return font_descent

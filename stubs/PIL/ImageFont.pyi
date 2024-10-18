@@ -5,7 +5,8 @@ class Layout(enum.IntEnum):
   BASIC = 0
   RAQM = 1
 
-class FreeTypeFont: ...
+class FreeTypeFont:
+  def getmetrics(self) -> tuple[int, int]: ...
 
 class ImageFont: ...
 
