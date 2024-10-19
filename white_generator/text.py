@@ -6,6 +6,7 @@ from . import types
 def fit_text_rectangle(
     image_parameters: types.ImageParameters,
     text_parameters: types.TextParameters,
+    font: ImageFont.FreeTypeFont | ImageFont.ImageFont,
 ) -> types.Rectangle:
     text_left = _crop(text_parameters.rectangle.left, 0, image_parameters.width)
     text_top = _crop(text_parameters.rectangle.top, 0, image_parameters.height)
@@ -25,6 +26,9 @@ def fit_text_rectangle(
         text_top,
         image_parameters.height,
     )
+    font_descent = _get_font_descent(font)
+    if image_parameters.height - text_bottom < font_descent:
+        text_bottom = image_parameters.height - font_descent
     return types.Rectangle(text_left, text_top, text_right, text_bottom)
 
 def fit_text(

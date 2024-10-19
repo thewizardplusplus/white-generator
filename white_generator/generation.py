@@ -38,19 +38,17 @@ def generate_image(
                 height=image_height,
             )
 
+    text_font = load_font(text_parameters.font.file, text_parameters.font.size)
     updated_text_parameters = dataclasses.replace(
         text_parameters,
         rectangle=text.fit_text_rectangle(
             updated_image_parameters,
             text_parameters,
+            text_font,
         ),
     )
 
     draw = ImageDraw.Draw(image)
-    text_font = load_font(
-        updated_text_parameters.font.file,
-        updated_text_parameters.font.size,
-    )
     fitted_note = text.fit_text(draw, note, updated_text_parameters, text_font)
     draw.multiline_text(
         text.get_text_position(draw, fitted_note, updated_text_parameters, text_font),

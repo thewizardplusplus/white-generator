@@ -8,12 +8,18 @@ from . import text
 from . import types
 
 class TestFitTextRectangle(unittest.TestCase):
+  def setUp(self) -> None:
+    self.font = unittest.mock.create_autospec(ImageFont.FreeTypeFont)
+
   def test_without_changes(self) -> None:
+    self.font.getmetrics.side_effect = [(23, 42)]
+
     rectangle = text.fit_text_rectangle(
         types.ImageParameters(width=640, height=480),
         types.TextParameters(
           rectangle=types.Rectangle(left=50, top=60, right=590, bottom=420),
         ),
+        self.font,
     )
 
     self.assertEqual(rectangle, types.Rectangle(
@@ -22,13 +28,19 @@ class TestFitTextRectangle(unittest.TestCase):
       right=590,
       bottom=420,
     ))
+    self.font.getmetrics.assert_has_calls([
+      unittest.mock.call(),
+    ])
 
   def test_left_coordinate_is_out_of_image(self) -> None:
+    self.font.getmetrics.side_effect = [(23, 42)]
+
     rectangle = text.fit_text_rectangle(
         types.ImageParameters(width=640, height=480),
         types.TextParameters(
           rectangle=types.Rectangle(left=-100, top=60, right=590, bottom=420),
         ),
+        self.font,
     )
 
     self.assertEqual(rectangle, types.Rectangle(
@@ -37,13 +49,19 @@ class TestFitTextRectangle(unittest.TestCase):
       right=590,
       bottom=420,
     ))
+    self.font.getmetrics.assert_has_calls([
+      unittest.mock.call(),
+    ])
 
   def test_top_coordinate_is_out_of_image(self) -> None:
+    self.font.getmetrics.side_effect = [(23, 42)]
+
     rectangle = text.fit_text_rectangle(
         types.ImageParameters(width=640, height=480),
         types.TextParameters(
           rectangle=types.Rectangle(left=50, top=-100, right=590, bottom=420),
         ),
+        self.font,
     )
 
     self.assertEqual(rectangle, types.Rectangle(
@@ -52,13 +70,19 @@ class TestFitTextRectangle(unittest.TestCase):
       right=590,
       bottom=420,
     ))
+    self.font.getmetrics.assert_has_calls([
+      unittest.mock.call(),
+    ])
 
   def test_right_coordinate_is_out_of_image(self) -> None:
+    self.font.getmetrics.side_effect = [(23, 42)]
+
     rectangle = text.fit_text_rectangle(
         types.ImageParameters(width=640, height=480),
         types.TextParameters(
           rectangle=types.Rectangle(left=50, top=60, right=1000, bottom=420),
         ),
+        self.font,
     )
 
     self.assertEqual(rectangle, types.Rectangle(
@@ -67,13 +91,19 @@ class TestFitTextRectangle(unittest.TestCase):
       right=640,
       bottom=420,
     ))
+    self.font.getmetrics.assert_has_calls([
+      unittest.mock.call(),
+    ])
 
   def test_right_coordinate_is_less_than_left_one(self) -> None:
+    self.font.getmetrics.side_effect = [(23, 42)]
+
     rectangle = text.fit_text_rectangle(
         types.ImageParameters(width=640, height=480),
         types.TextParameters(
           rectangle=types.Rectangle(left=50, top=60, right=25, bottom=420),
         ),
+        self.font,
     )
 
     self.assertEqual(rectangle, types.Rectangle(
@@ -82,13 +112,19 @@ class TestFitTextRectangle(unittest.TestCase):
       right=50,
       bottom=420,
     ))
+    self.font.getmetrics.assert_has_calls([
+      unittest.mock.call(),
+    ])
 
   def test_right_coordinate_is_negative(self) -> None:
+    self.font.getmetrics.side_effect = [(23, 42)]
+
     rectangle = text.fit_text_rectangle(
         types.ImageParameters(width=640, height=480),
         types.TextParameters(
           rectangle=types.Rectangle(left=50, top=60, right=-70, bottom=420),
         ),
+        self.font,
     )
 
     self.assertEqual(rectangle, types.Rectangle(
@@ -97,28 +133,40 @@ class TestFitTextRectangle(unittest.TestCase):
       right=570,
       bottom=420,
     ))
+    self.font.getmetrics.assert_has_calls([
+      unittest.mock.call(),
+    ])
 
   def test_bottom_coordinate_is_out_of_image(self) -> None:
+    self.font.getmetrics.side_effect = [(23, 42)]
+
     rectangle = text.fit_text_rectangle(
         types.ImageParameters(width=640, height=480),
         types.TextParameters(
           rectangle=types.Rectangle(left=50, top=60, right=590, bottom=1000),
         ),
+        self.font,
     )
 
     self.assertEqual(rectangle, types.Rectangle(
       left=50,
       top=60,
       right=590,
-      bottom=480,
+      bottom=438,
     ))
+    self.font.getmetrics.assert_has_calls([
+      unittest.mock.call(),
+    ])
 
   def test_bottom_coordinate_is_less_than_top_one(self) -> None:
+    self.font.getmetrics.side_effect = [(23, 42)]
+
     rectangle = text.fit_text_rectangle(
         types.ImageParameters(width=640, height=480),
         types.TextParameters(
           rectangle=types.Rectangle(left=50, top=60, right=590, bottom=30),
         ),
+        self.font,
     )
 
     self.assertEqual(rectangle, types.Rectangle(
@@ -127,13 +175,19 @@ class TestFitTextRectangle(unittest.TestCase):
       right=590,
       bottom=60,
     ))
+    self.font.getmetrics.assert_has_calls([
+      unittest.mock.call(),
+    ])
 
   def test_bottom_coordinate_is_negative(self) -> None:
+    self.font.getmetrics.side_effect = [(23, 42)]
+
     rectangle = text.fit_text_rectangle(
         types.ImageParameters(width=640, height=480),
         types.TextParameters(
           rectangle=types.Rectangle(left=50, top=60, right=590, bottom=-70),
         ),
+        self.font,
     )
 
     self.assertEqual(rectangle, types.Rectangle(
@@ -142,6 +196,9 @@ class TestFitTextRectangle(unittest.TestCase):
       right=590,
       bottom=410,
     ))
+    self.font.getmetrics.assert_has_calls([
+      unittest.mock.call(),
+    ])
 
 class TestFitText(unittest.TestCase):
   def setUp(self) -> None:
