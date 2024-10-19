@@ -158,6 +158,63 @@ class TestFitTextRectangle(unittest.TestCase):
       unittest.mock.call(),
     ])
 
+  def test_bottom_coordinate_is_too_close_to_image_height(self) -> None:
+    self.font.getmetrics.side_effect = [(23, 42)]
+
+    rectangle = text.fit_text_rectangle(
+        types.ImageParameters(width=640, height=480),
+        types.TextParameters(
+          rectangle=types.Rectangle(left=50, top=60, right=590, bottom=470),
+        ),
+        self.font,
+    )
+
+    self.assertEqual(rectangle, types.Rectangle(
+      left=50,
+      top=60,
+      right=590,
+      bottom=438,
+    ))
+    self.font.getmetrics.assert_has_calls([
+      unittest.mock.call(),
+    ])
+
+  def test_bottom_coordinate_is_out_of_image_with_image_font(self) -> None:
+    self.font = unittest.mock.create_autospec(ImageFont.ImageFont)
+
+    rectangle = text.fit_text_rectangle(
+        types.ImageParameters(width=640, height=480),
+        types.TextParameters(
+          rectangle=types.Rectangle(left=50, top=60, right=590, bottom=1000),
+        ),
+        self.font,
+    )
+
+    self.assertEqual(rectangle, types.Rectangle(
+      left=50,
+      top=60,
+      right=590,
+      bottom=480,
+    ))
+
+  def test_bottom_coordinate_is_too_close_to_image_height_with_image_font(self) -> None:
+    self.font = unittest.mock.create_autospec(ImageFont.ImageFont)
+
+    rectangle = text.fit_text_rectangle(
+        types.ImageParameters(width=640, height=480),
+        types.TextParameters(
+          rectangle=types.Rectangle(left=50, top=60, right=590, bottom=470),
+        ),
+        self.font,
+    )
+
+    self.assertEqual(rectangle, types.Rectangle(
+      left=50,
+      top=60,
+      right=590,
+      bottom=470,
+    ))
+
   def test_bottom_coordinate_is_less_than_top_one(self) -> None:
     self.font.getmetrics.side_effect = [(23, 42)]
 
