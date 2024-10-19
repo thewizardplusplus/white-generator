@@ -54,7 +54,7 @@ def parse_options() -> Options:
         action='version',
         help='show the version message and exit',
         version='White Generator, v{:s}\n'.format(__version__) \
-            + 'Copyright (C) 2017 thewizardplusplus',
+            + 'Copyright (C) 2017, 2024 thewizardplusplus',
     )
     parser.add_argument(
         '-i',
