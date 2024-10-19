@@ -1,6 +1,6 @@
 PROJECT_NAME := white-generator
 
-.PHONY: help lint test install uninstall build
+.PHONY: help lint test install uninstall build upload upload-test
 
 help:
 	@echo "Usage:"
@@ -9,12 +9,14 @@ help:
 	@echo "Options: see for the details \"man make\"."
 	@echo
 	@echo "Targets:"
-	@echo "  help       Show this help message."
-	@echo "  lint       Run the linter."
-	@echo "  test       Run the unit tests."
-	@echo "  install    Install the project package."
-	@echo "  uninstall  Uninstall the project package."
-	@echo "  build      Generate distribution archives."
+	@echo "  help         Show this help message."
+	@echo "  lint         Run the linter."
+	@echo "  test         Run the unit tests."
+	@echo "  install      Install the project package."
+	@echo "  uninstall    Uninstall the project package."
+	@echo "  build        Generate distribution archives."
+	@echo "  upload       Upload the distribution archives to https://pypi.org/."
+	@echo "  upload-test  Upload the distribution archives to https://test.pypi.org/."
 
 lint:
 	mypy "$$(echo "$(PROJECT_NAME)" | tr "-" "_")"
@@ -31,3 +33,11 @@ uninstall:
 build:
 	python3 -m build
 	python3 -m twine check dist/*
+
+upload: uninstall
+	python3 -m twine upload dist/*
+	python3 -m pip install --no-deps "$(PROJECT_NAME)"
+
+upload-test: uninstall
+	python3 -m twine upload --repository testpypi dist/*
+	python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps "$(PROJECT_NAME)"
