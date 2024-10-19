@@ -79,23 +79,11 @@ Options:
 * `--no-database` &mdash; don't filter notes by database;
 * `--no-resizing` &mdash; don't resize the background image.
 
-## Screenshots
+## Generated Images
 
-![Help message, part 1](screenshots/screenshot_01.png)
+![](docs/screenshots/screenshot_01.png)
 
-Help message, part 1
-
-![Help message, part 2](screenshots/screenshot_02.png)
-
-Help message, part 2
-
-![Generation of images](screenshots/screenshot_03.png)
-
-Generation of images
-
-![Generated image](screenshots/screenshot_04.png)
-
-Generated image
+![](docs/screenshots/screenshot_02.png)
 
 ## License
 
